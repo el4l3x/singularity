@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'es_VE',
 
     /*
     |--------------------------------------------------------------------------
@@ -196,6 +196,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+
+        /* Laravel Permission */
+        /* Spatie\Permission\PermissionServiceProvider::class, */
 
     ],
 
