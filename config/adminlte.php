@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Singularity',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Singularity</b>DEV',
+    'logo_img' => 'storage\logo-aside.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Singularity Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,10 +109,11 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            /* 'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png', */
+            'path' => 'storage\aside.png',
+            'alt' => 'Cargando...',
             'effect' => 'animation__shake',
-            'width' => 60,
+            'width' => 136,
             'height' => 60,
         ],
     ],
@@ -132,9 +133,9 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -150,10 +151,10 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
-    'layout_dark_mode' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => ['xs' => false, 'sm' => false, 'md' => true, 'lg' => true, 'xl' => true],
+    'layout_fixed_footer' => ['xs' => false, 'sm' => false, 'md' => true, 'lg' => true, 'xl' => true],
+    'layout_dark_mode' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -192,10 +193,10 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav_nav' => 'navbar-expand',
+    'classes_sidebar' => 'sidebar-dark-gray elevation-4',
+    'classes_sidebar_nav' => 'nav-child-indent nav-compact',
+    'classes_topnav' => 'navbar-dark',
+    'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
     /*
@@ -210,12 +211,12 @@ return [
     |
     */
 
-    'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_mini' => 'md',
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
-    'sidebar_collapse_remember' => false,
+    'sidebar_collapse_remember' => true,
     'sidebar_collapse_remember_no_transition' => true,
-    'sidebar_scrollbar_theme' => 'os-theme-light',
+    'sidebar_scrollbar_theme' => 'os-theme-dark',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
@@ -253,13 +254,13 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => 'user.profile',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,21 +292,22 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /* [
             'type'         => 'navbar-search',
             'text'         => 'search',
             'topnav_right' => true,
-        ],
+        ], */
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
         // Sidebar items:
-        [
+        /* [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
-        ],
+        ], */
+        ['header' => 'GENERAL'],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
@@ -318,7 +320,13 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'SEGURIDAD'],
+        [
+            'text'   => 'Bitacora',
+            'url'    => 'logs',
+            'active' => ['logs*'],
+            'can'    => 'logs.index',
+        ],
         [
             'text' => 'profile',
             'url'  => 'admin/settings',
@@ -537,5 +545,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

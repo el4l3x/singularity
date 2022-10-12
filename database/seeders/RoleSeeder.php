@@ -19,8 +19,8 @@ class RoleSeeder extends Seeder
         $roleAdm = Role::create(['name' => 'Admin']);
 
         Permission::create([
-            'name' => 'posts.index',
-            'description' => 'Ver Noticias Publicadas',
+            'name' => 'logs.index',
+            'description' => 'Ver Bitacora',
         ])->syncRoles([$roleAdm]);
     }
 }

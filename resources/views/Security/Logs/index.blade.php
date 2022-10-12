@@ -3,11 +3,12 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Bienvenido</h1>
+    <h1>Bitacora</h1>
 @stop
 
 @section('content')
-    <p>Bienvenido al panel administrativo de Singularity.</p>
+    @section('plugins.PluginName', true)
+    @livewire('security.logs-index')
 @stop
 
 @section('css')

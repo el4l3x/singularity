@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,10 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('tets');
-        //return view('dashboard');
+        return view('dashboard');
     })->name('dashboard');
+
+    Route::resources([
+        'logs' => LogController::class,
+    ]);
 });
