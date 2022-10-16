@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreFranquiciaRequest extends FormRequest
 {
@@ -13,7 +14,11 @@ class StoreFranquiciaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('franquicias.create')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -24,7 +29,9 @@ class StoreFranquiciaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required|unique:franquicias,nombre',
+            'actividad' => 'required',
+            'rif' => 'required|numeric|digits:9|unique:franquicias,rif',
         ];
     }
 }

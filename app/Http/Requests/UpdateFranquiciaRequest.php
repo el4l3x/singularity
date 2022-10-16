@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateFranquiciaRequest extends FormRequest
 {
@@ -13,7 +14,12 @@ class UpdateFranquiciaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('franquicias.edit')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -24,7 +30,9 @@ class UpdateFranquiciaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required|unique:franquicias,nombre,'.$this->franquicia->id,
+            'actividad' => 'required',
+            'rif' => 'required|numeric|digits:9|unique:franquicias,rif,'.$this->franquicia->id,
         ];
     }
 }

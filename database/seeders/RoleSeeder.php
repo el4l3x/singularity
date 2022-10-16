@@ -22,5 +22,22 @@ class RoleSeeder extends Seeder
             'name' => 'logs.index',
             'description' => 'Ver Bitacora',
         ])->syncRoles([$roleAdm]);
+        
+        Permission::create([
+            'name' => 'franquicias.index',
+            'description' => 'Ver Franquicias',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'franquicias.create',
+            'description' => 'Crear Franquicias',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'franquicias.edit',
+            'description' => 'Editar Franquicia',
+        ])->syncRoles([$roleAdm]);
+        Permission::create([
+            'name' => 'franquicias.destroy',
+            'description' => 'Eliminar Franquicia',
+        ])->syncRoles([$roleAdm]);
     }
 }

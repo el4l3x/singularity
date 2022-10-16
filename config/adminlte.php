@@ -133,7 +133,7 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => true,
+    'usermenu_image' => false,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
 
@@ -307,7 +307,13 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ], */
-        ['header' => 'GENERAL'],
+        ['header' => 'ADMINISTRAR'],
+        [
+            'text'   => 'Franquicias',
+            'route'    => 'franquicias.index',
+            'active' => ['franquicias*'],
+            'can'    => 'franquicias.index',
+        ],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
@@ -323,7 +329,7 @@ return [
         ['header' => 'SEGURIDAD'],
         [
             'text'   => 'Bitacora',
-            'url'    => 'logs',
+            'route'    => 'logs.index',
             'active' => ['logs*'],
             'can'    => 'logs.index',
         ],

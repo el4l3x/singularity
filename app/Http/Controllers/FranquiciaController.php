@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Franquicia;
 use App\Http\Requests\StoreFranquiciaRequest;
 use App\Http\Requests\UpdateFranquiciaRequest;
+use App\Models\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FranquiciaController extends Controller
 {
@@ -15,7 +18,10 @@ class FranquiciaController extends Controller
      */
     public function index()
     {
-        //
+        $franquicias = Franquicia::all();
+        return view("Adm.Franquicias.index", [
+            'franquicias' => $franquicias,
+        ]);
     }
 
     /**
@@ -25,7 +31,7 @@ class FranquiciaController extends Controller
      */
     public function create()
     {
-        //
+        return view("Adm.Franquicias.create");
     }
 
     /**
@@ -36,7 +42,31 @@ class FranquiciaController extends Controller
      */
     public function store(StoreFranquiciaRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $franquicia = new Franquicia();
+
+            $franquicia->nombre = $request->nombre;
+            $franquicia->actividad = $request->actividad;
+            $franquicia->rif = $request->rif;
+
+            $franquicia->save();
+
+            $log = new Log();
+
+            $log->user_id = Auth::user()->id;
+            $log->accion = "Crear nueva franquicia";
+
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route('franquicias.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -58,7 +88,9 @@ class FranquiciaController extends Controller
      */
     public function edit(Franquicia $franquicia)
     {
-        //
+        return view("Adm.Franquicias.edit", [
+            'franquicia' => $franquicia,
+        ]);
     }
 
     /**
@@ -70,7 +102,26 @@ class FranquiciaController extends Controller
      */
     public function update(UpdateFranquiciaRequest $request, Franquicia $franquicia)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $franquicia->nombre = $request->nombre;
+            $franquicia->actividad = $request->actividad;
+            $franquicia->rif = $request->rif;
+            $franquicia->save();
+
+            $log = new Log();
+            $log->accion = "Editar franquicia ".$franquicia->id;
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route('franquicias.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -81,6 +132,22 @@ class FranquiciaController extends Controller
      */
     public function destroy(Franquicia $franquicia)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $franquicia->delete();
+
+            $log = new Log();
+            $log->accion = "Eliminar franquicia ".$franquicia->id."-".$franquicia->nombre;
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route('franquicias.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 }

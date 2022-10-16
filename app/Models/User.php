@@ -51,6 +51,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at' => 'date:d-m-Y',
     ];
 
     /**
@@ -75,5 +76,10 @@ class User extends Authenticatable
     public function adminlte_profile_url()
     {
         return 'user/profile';
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
     }
 }

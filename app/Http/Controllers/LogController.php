@@ -7,7 +7,7 @@ use App\Http\Requests\StoreLogRequest;
 use App\Http\Requests\UpdateLogRequest;
 
 class LogController extends Controller
-{
+{  
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +15,10 @@ class LogController extends Controller
      */
     public function index()
     {
-        return view('Security.Logs.index');
+        $logs = Log::with('usuario')->get();
+        return view('Security.Logs.index', [
+            'logs' => $logs,
+        ]);
     }
 
     /**
