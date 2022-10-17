@@ -25,11 +25,11 @@ class RoleSeeder extends Seeder
         
         Permission::create([
             'name' => 'franquicias.index',
-            'description' => 'Ver Franquicias',
+            'description' => 'Ver Usuarios',
         ])->syncRoles([$roleAdm]);        
         Permission::create([
             'name' => 'franquicias.create',
-            'description' => 'Crear Franquicias',
+            'description' => 'Crear Usuarios',
         ])->syncRoles([$roleAdm]);        
         Permission::create([
             'name' => 'franquicias.edit',
@@ -38,6 +38,40 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'franquicias.destroy',
             'description' => 'Eliminar Franquicia',
+        ])->syncRoles([$roleAdm]);
+        
+        Permission::create([
+            'name' => 'users.index',
+            'description' => 'Ver Usuarios',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'users.create',
+            'description' => 'Crear Usuario',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'users.edit',
+            'description' => 'Editar Usuario',
+        ])->syncRoles([$roleAdm]);
+        Permission::create([
+            'name' => 'users.destroy',
+            'description' => 'Eliminar Usuario',
+        ])->syncRoles([$roleAdm]);
+
+        Permission::create([
+            'name' => 'cobros.index',
+            'description' => 'Ver cuentas por cobrar',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'cobros.create',
+            'description' => 'Crear cuenta por cobrar',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'cobros.edit',
+            'description' => 'Editar cuenta por cobrar',
+        ])->syncRoles([$roleAdm]);
+        Permission::create([
+            'name' => 'cobros.destroy',
+            'description' => 'Eliminar cuenta por cobrar',
         ])->syncRoles([$roleAdm]);
     }
 }

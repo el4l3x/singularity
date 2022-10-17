@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FranquiciaController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +32,6 @@ Route::middleware([
     Route::resources([
         'logs' => LogController::class,
         'franquicias' => FranquiciaController::class,
+        'usuarios' => UsuarioController::class,
     ]);
 });

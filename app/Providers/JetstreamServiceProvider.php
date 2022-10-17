@@ -44,8 +44,8 @@ class JetstreamServiceProvider extends ServiceProvider
         });
 
         Fortify::registerView(function () {
-            if (Auth::check()) {
-                return view('auth.register');                
+            if (Auth::check() && Auth::user()->hasPermissionTo('users.create')) {
+                return view('Security.Users.create');                
             } else {
                 return view('auth.login');
             }

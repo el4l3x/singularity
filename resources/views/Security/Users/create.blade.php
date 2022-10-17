@@ -1,13 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Franquicias')
+@section('title', 'Usuarios')
 
 @section('content_header')
-    <h1>Nueva Franquicia</h1>
+    <h1>Nuevo Usuario</h1>
 @stop
 
 @section('content')
-    {{-- @livewire('security.logs-index') --}}    
     <div class="card">
         
         <div class="card-body">
@@ -15,7 +14,7 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <form action="{{ route("franquicias.store") }}" method="post">
+                    <form action="{{ route("usuarios.store") }}" method="post">
                         @csrf
                         <div class="form-group">
                             <x-adminlte-input name="nombre" label="Nombre" placeholder="" enable-old-support>
@@ -28,9 +27,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <x-adminlte-input name="actividad" label="Actividad Economica" placeholder="" enable-old-support>
+                            <x-adminlte-input name="usuario" label="Usuario" placeholder="" enable-old-support>
                                 <x-slot name="bottomSlot">
-                                    @error('actividad')
+                                    @error('usuario')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </x-slot>
@@ -38,9 +37,19 @@
                         </div>
                         
                         <div class="form-group">
-                            <x-adminlte-input name="rif" label="RIF" placeholder="" enable-old-support>
+                            <x-adminlte-input name="clave" type="password" label="Clave" placeholder="" enable-old-support>
                                 <x-slot name="bottomSlot">
-                                    @error('rif')
+                                    @error('clave')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
+                            </x-adminlte-input>
+                        </div>
+                        
+                        <div class="form-group">
+                            <x-adminlte-input name="clave_confirmation" type="password" label="Confirmar Clave" placeholder="" enable-old-support>
+                                <x-slot name="bottomSlot">
+                                    @error('clave_confirmation')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </x-slot>
@@ -49,7 +58,7 @@
                         
                         <div class="form-group">
                             <button class="btn btn-gray" type="submit">Guardar</button>
-                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.index") }}">Volver</a>
+                            <a class="btn btn-gray" role="button" href="{{ route("usuarios.index") }}">Volver</a>
                         </div>
                     </form>
 

@@ -334,6 +334,12 @@ return [
             'can'    => 'logs.index',
         ],
         [
+            'text'   => 'Usuarios',
+            'route'    => 'usuarios.index',
+            'active' => ['users*'],
+            'can'    => 'users.index',
+        ],
+        [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',

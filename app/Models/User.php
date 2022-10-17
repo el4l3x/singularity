@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Log::class);
     }
+
+    public function franquicias()
+    {
+        return $this->belongsToMany(Franquicia::class);
+    }
 }

@@ -1,13 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Bitacora')
+@section('title', 'Usuarios')
 
 @section('content_header')
-    <h1>Bitacora</h1>
+    @can('users.create')
+        <a class="btn btn-gray btn-sm float-right" type="button" href="{{ route('usuarios.create') }}">Nuevo Usuario</a>
+    @endcan
+    <h3>Usuarios</h3>
 @stop
 
 @section('content')
-    {{-- @livewire('security.logs-index') --}}    
     <div class="card">
         
         <div class="card-body">
@@ -20,20 +22,48 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <table id="logs-table" class="table table-dark table-hover responsive">
+                    <table id="users-table" class="table table-dark table-hover responsive">
                         <thead>
                             <tr>
-                                <th>Acción</th>
+                                <th>Nombre</th>
                                 <th>Usuario</th>
-                                <th>Fecha</th>
+                                <th>Franquicias</th>
+                                <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($logs as $log)
+                            @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $log->accion }}</td>
-                                    <td>{{ $log->usuario->name }}</td>
-                                    <td>{!! date('d-m-Y', strtotime($log->created_at)) !!}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->username }}</td>
+                                    <td>
+                                        @foreach ($user->franquicias as $franquicia)
+                                            @if ($loop->last)
+                                                {{$franquicia->nombre}}
+                                            @else
+                                                {{$franquicia->nombre}} -
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @can('users.edit')
+                                            <a href="{{ route('usuarios.edit', $user) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
+                                                <i class="fa fa-fw fa-edit"></i>
+                                            </a>
+                                        @endcan
+
+                                        @can('users.destroy')
+                                            <button title="Eliminar" class="btn btn-xs btn-dark gray-text mx-1 shadow" onclick="event.preventDefault();
+                                            document.getElementById({{$user->id}}).submit();">
+                                                <i class="fa fw fa-trash"></i>
+                                            </button>
+
+                                            <form action="{{ route('usuarios.destroy', $user) }}" method="POST" id="{{$user->id}}" class="d-none">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @endcan
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -66,6 +96,14 @@
         div.dt-button-info {
            background: #6c757d;
         }
+        .gray-text {
+            color: #6c757d !important;
+            text-decoration: none !important;
+        }
+        .btn-gray {
+            background: #6c757d;
+            color: white;
+        }
     </style>
 @stop
 
@@ -75,7 +113,7 @@
     <script>        
         $(function () {
 
-            var table = $("#logs-table").DataTable({
+            var table = $("#users-table").DataTable({
                 "language": {
                     "search": "Buscar:",
                     "emptyTable": "No hay registros",
