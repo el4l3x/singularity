@@ -18,7 +18,7 @@ class FranquiciaController extends Controller
      */
     public function index()
     {
-        $franquicias = Franquicia::all();
+        $franquicias = Franquicia::get();
         return view("Adm.Franquicias.index", [
             'franquicias' => $franquicias,
         ]);

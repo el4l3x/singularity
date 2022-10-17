@@ -334,8 +334,16 @@ return [
             'can'    => 'logs.index',
         ],
         [
+            'text'   => 'Roles',
+            'route'    => 'roles.index',
+            'icon' => 'fas fa-fw fa-users-cog',
+            'active' => ['roles*'],
+            'can'    => 'roles.index',
+        ],
+        [
             'text'   => 'Usuarios',
             'route'    => 'usuarios.index',
+            'icon' => 'fas fa-fw fa-users',
             'active' => ['users*'],
             'can'    => 'users.index',
         ],
