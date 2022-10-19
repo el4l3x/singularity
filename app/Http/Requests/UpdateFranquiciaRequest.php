@@ -33,6 +33,7 @@ class UpdateFranquiciaRequest extends FormRequest
             'nombre' => 'required|unique:franquicias,nombre,'.$this->franquicia->id,
             'actividad' => 'required',
             'rif' => 'required|numeric|digits:9|unique:franquicias,rif,'.$this->franquicia->id,
+            'usuarios' => 'array',
         ];
     }
 }

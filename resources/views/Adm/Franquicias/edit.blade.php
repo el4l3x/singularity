@@ -46,6 +46,44 @@
                                 </x-slot>
                             </x-adminlte-input>
                         </div>
+
+                        <div class="form-group">
+                            @php
+                            $configu = [
+                                "placeholder" => "",
+                                "allowClear" => false,
+                                "liveSearch" => true,
+                                "liveSearchPlaceholder" => "Buscar...",
+                                "title" => "Selecciona los usuarios...",
+                                "showTick" => false,
+                                "actionsBox" => false,
+                            ];
+                            @endphp
+                            <x-adminlte-select2 id="usuarios" name="usuarios[]" label="Usuarios a cargo" label-class="text-white" :config="$configu" multiple enable-old-support>
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-tag"></i>
+                                    </div>
+                                </x-slot>
+
+                                @if ($franquicia->users->count() < 1)
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach ($users as $user)
+                                        @foreach ($franquicia->users as $franquiciau)
+                                            @if ($franquiciau->pivot->user_id == $user->id)
+                                                <option value="{{ $user->id }}" selected>{{ $user->name }}</option>                                            
+                                            @else
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endif
+
+                            </x-adminlte-select2>
+                        </div>
                         
                         <div class="form-group">
                             <button class="btn btn-gray" type="submit">Guardar</button>
@@ -60,6 +98,8 @@
     </div>
 
 @stop
+
+@section('plugins.Select2', true)
 
 @section('css')
     <style>

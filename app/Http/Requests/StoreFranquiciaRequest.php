@@ -32,6 +32,7 @@ class StoreFranquiciaRequest extends FormRequest
             'nombre' => 'required|unique:franquicias,nombre',
             'actividad' => 'required',
             'rif' => 'required|numeric|digits:9|unique:franquicias,rif',
+            'usuarios' => 'array',
         ];
     }
 }

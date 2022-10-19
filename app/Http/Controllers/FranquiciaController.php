@@ -60,6 +60,8 @@ class FranquiciaController extends Controller
 
             $franquicia->save();
 
+            $franquicia->users()->sync($request->usuarios);
+
             $log = new Log();
 
             $log->user_id = Auth::user()->id;
@@ -77,17 +79,6 @@ class FranquiciaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Franquicia  $franquicia
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Franquicia $franquicia)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Franquicia  $franquicia
@@ -95,8 +86,11 @@ class FranquiciaController extends Controller
      */
     public function edit(Franquicia $franquicia)
     {
+        $users = User::all();
+
         return view("Adm.Franquicias.edit", [
             'franquicia' => $franquicia,
+            'users' => $users,
         ]);
     }
 
@@ -116,6 +110,8 @@ class FranquiciaController extends Controller
             $franquicia->actividad = $request->actividad;
             $franquicia->rif = $request->rif;
             $franquicia->save();
+
+            $franquicia->users()->sync($request->usuarios);
 
             $log = new Log();
             $log->accion = "Editar franquicia ".$franquicia->id;
