@@ -25,11 +25,11 @@ class RoleSeeder extends Seeder
         
         Permission::create([
             'name' => 'franquicias.index',
-            'description' => 'Ver Usuarios',
+            'description' => 'Ver Franquicias',
         ])->syncRoles([$roleAdm]);        
         Permission::create([
             'name' => 'franquicias.create',
-            'description' => 'Crear Usuarios',
+            'description' => 'Crear Franquicia',
         ])->syncRoles([$roleAdm]);        
         Permission::create([
             'name' => 'franquicias.edit',

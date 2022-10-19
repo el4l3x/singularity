@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Franquicias')
 
 @section('content_header')
     <h1>Editar Franquicia {{ $franquicia->nombre }}</h1>

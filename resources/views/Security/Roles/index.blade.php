@@ -31,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($roles as $role)
+                            @foreach ($roles as $role)
                                 <tr>
                                     <td>{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
@@ -48,14 +48,14 @@
                                                 <i class="fa fw fa-trash"></i>
                                             </button>
 
-                                            <form action="{{ route('usuarios.destroy', $role) }}" method="POST" id="{{$role->id}}" class="d-none">
+                                            <form action="{{ route('roles.destroy', $role) }}" method="POST" id="{{$role->id}}" class="d-none">
                                                 @csrf
-                                                @method('DELETE')
+                                                @method('delete')
                                             </form>
                                         @endcan
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 

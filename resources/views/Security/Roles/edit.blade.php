@@ -3,7 +3,7 @@
 @section('title', 'Roles')
 
 @section('content_header')
-    <h1>Nuevo Rol de Usuario</h1>
+    <h1>Editar rol {{ $rol->name }}</h1>
 @stop
 
 @section('content')
@@ -14,10 +14,11 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <form action="{{ route("roles.store") }}" method="post">
+                    <form action="{{ route("roles.update", $rol) }}" method="post">
+                        @method('PUT')
                         @csrf
                         <div class="form-group">
-                            <x-adminlte-input name="nombre" label="Nombre" placeholder="" enable-old-support>
+                            <x-adminlte-input name="nombre" label="Nombre" placeholder="" enable-old-support value="{{ $rol->name }}">
                                 <x-slot name="bottomSlot">
                                     @error('nombre')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -25,7 +26,7 @@
                                 </x-slot>
                             </x-adminlte-input>
                         </div>
-                        
+
                         <div class="form-group">
                             @php
                             $config = [
@@ -45,12 +46,12 @@
                                     </div>
                                 </x-slot>
 
-                                {{-- <x-slot name="appendSlot">
-                                    <x-adminlte-button theme="outline-dark" label="Clear" icon="fas fa-lg fa-ban text-danger"/>
-                                </x-slot> --}}
-
-                                @foreach ($permissions as $permiso)
-                                    <option value="{{ $permiso->id }}">{{ $permiso->description }}</option>
+                                @foreach ($permisos as $permiso)
+                                    @if ($rol->hasPermissionTo($permiso->id))                                        
+                                        <option value="{{ $permiso->id }}" selected>{{ $permiso->description }}</option>                                        
+                                    @else
+                                        <option value="{{ $permiso->id }}">{{ $permiso->description }}</option>                                        
+                                    @endif
                                 @endforeach
 
                             </x-adminlte-select2>
