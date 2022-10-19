@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Franquicia;
 use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
 {
@@ -21,7 +23,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $users = User::with('franquicias')->get();
+        $users = User::with('franquicias', 'roles')->get();
         return view('Security.Users.index', [
             'users' => $users,
         ]);
@@ -34,7 +36,12 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('Security.Users.create');
+        $franquicias = Franquicia::all();
+        $roles = Role::all();
+        return view('Security.Users.create', [
+            'franquicias' => $franquicias,
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -57,6 +64,9 @@ class UsuarioController extends Controller
             $user->username = $request->usuario;
             $user->password = Hash::make($request->clave);
             $user->save();
+
+            $user->franquicias()->sync($request->franquicias);
+            $user->roles()->sync($request->rol);
 
             $log = new Log();
             $log->accion = "Crear nuevo usuario ".$user->username.' ('.$user->id.')';

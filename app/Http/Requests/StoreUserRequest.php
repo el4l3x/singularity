@@ -32,7 +32,9 @@ class StoreUserRequest extends FormRequest
         return [
             'nombre' => 'required|string',
             'usuario' => 'required|unique:users,username',
-            'clave' => 'required|string|confirmed'
+            'clave' => 'required|string|confirmed',
+            'franquicias' => 'required|array',
+            'rol' => 'required|integer'
         ];
     }
 }

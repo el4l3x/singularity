@@ -55,6 +55,44 @@
                                 </x-slot>
                             </x-adminlte-input>
                         </div>
+
+                        <div class="form-group">
+                            @php
+                            $config = [
+                                "placeholder" => "",
+                                "allowClear" => false,
+                                "liveSearch" => true,
+                                "liveSearchPlaceholder" => "Buscar...",
+                                "title" => "Selecciona las franquicias...",
+                                "showTick" => false,
+                                "actionsBox" => false,
+                            ];
+                            @endphp
+                            <x-adminlte-select2 id="franquicias" name="franquicias[]" label="Franquicias a cargo" label-class="text-white" igroup-size="md" :config="$config" multiple enable-old-support>
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-tag"></i>
+                                    </div>
+                                </x-slot>
+
+                                {{-- <x-slot name="appendSlot">
+                                    <x-adminlte-button theme="outline-dark" label="Clear" icon="fas fa-lg fa-ban text-danger"/>
+                                </x-slot> --}}
+
+                                @foreach ($franquicias as $franquicia)
+                                    <option value="{{ $franquicia->id }}">{{ $franquicia->nombre }}</option>
+                                @endforeach
+
+                            </x-adminlte-select2>
+                        </div>
+
+                        <div class="form-group">
+                            <x-adminlte-select name="rol" label="Rol de Usuario" enable-old-support>
+                                @foreach ($roles as $rol)
+                                    <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                                @endforeach
+                            </x-adminlte-select>
+                        </div>
                         
                         <div class="form-group">
                             <button class="btn btn-gray" type="submit">Guardar</button>
@@ -69,6 +107,8 @@
     </div>
 
 @stop
+
+@section('plugins.Select2', true)
 
 @section('css')
     <style>

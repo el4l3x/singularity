@@ -27,6 +27,7 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Usuario</th>
+                                <th>Rol</th>
                                 <th>Franquicias</th>
                                 <th>Opciones</th>
                             </tr>
@@ -36,6 +37,11 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
+                                    <td>
+                                        @foreach ($user->roles as $rol)
+                                            {{$rol->name}}
+                                        @endforeach
+                                    </td>
                                     <td>
                                         @foreach ($user->franquicias as $franquicia)
                                             @if ($loop->last)
