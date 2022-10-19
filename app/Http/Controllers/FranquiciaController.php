@@ -6,8 +6,10 @@ use App\Models\Franquicia;
 use App\Http\Requests\StoreFranquiciaRequest;
 use App\Http\Requests\UpdateFranquiciaRequest;
 use App\Models\Log;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class FranquiciaController extends Controller
 {
@@ -31,7 +33,12 @@ class FranquiciaController extends Controller
      */
     public function create()
     {
-        return view("Adm.Franquicias.create");
+        $roles = Role::all();
+        $users = User::all();
+        return view("Adm.Franquicias.create", [
+            'roles' => $roles,
+            'users' => $users,
+        ]);
     }
 
     /**

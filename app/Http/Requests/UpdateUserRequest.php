@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check() && Auth::user()->hasPermissionTo('users.create')) {
+        if (Auth::check() && Auth::user()->hasPermissionTo('users.edit')) {
             return true;
         } else {
             return false;
@@ -31,8 +31,6 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string',
-            'usuario' => 'required|unique:users,username',
-            'clave' => 'required|string|confirmed',
             'franquicias' => 'array',
             'rol' => 'required|integer'
         ];

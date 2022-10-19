@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Franquicia;
 use App\Models\Log;
 use App\Models\User;
@@ -99,9 +100,15 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $usuario)
     {
-        //
+        $franquicias = Franquicia::all();
+        $roles = Role::all();
+        return view('Security.Users.edit', [
+            'franquicias' => $franquicias,
+            'roles' => $roles,
+            'user' => $usuario,
+        ]);
     }
 
     /**
@@ -111,9 +118,35 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $usuario)
     {
-        //
+        Validator::make($request->all(), [
+            'usuario' => 'required|unique:users,username,'.$usuario->id,
+        ])->validate();
+
+        try {
+            DB::beginTransaction();
+
+            $usuario->name = $request->nombre;
+            $usuario->username = $request->usuario;
+            $usuario->save();
+
+            $usuario->franquicias()->sync($request->franquicias);
+            $usuario->roles()->sync($request->rol);
+
+            $log = new Log();
+            $log->accion = "Editar usuario ".$usuario->name.' ('.$usuario->id.')';
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route('usuarios.index');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
