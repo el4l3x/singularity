@@ -56,11 +56,15 @@ class FranquiciaController extends Controller
 
             $franquicia->nombre = $request->nombre;
             $franquicia->actividad = $request->actividad;
-            $franquicia->rif = $request->rif;
-
+            $franquicia->rif = $request->rif;            
+            $franquicia->control_factura = '00000000';
+            $franquicia->control_presupuesto = '00000000';
+            $franquicia->factura = '00000000';
+            $franquicia->presupuesto = '00000000';
             $franquicia->save();
 
             $franquicia->users()->sync($request->usuarios);
+
 
             $log = new Log();
 
