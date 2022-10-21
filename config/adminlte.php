@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 return [
 
     /*
@@ -326,6 +328,7 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
+        ['header' => 'TRABAJOS'],
         ['header' => 'SEGURIDAD'],
         [
             'text'   => 'Bitacora',
