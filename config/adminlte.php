@@ -317,9 +317,9 @@ return [
             'can'    => 'franquicias.index',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Personas',
+            'route'  => 'personas.index',
+            'can'  => 'personas.index',
         ],
         [
             'text'        => 'pages',

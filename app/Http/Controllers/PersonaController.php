@@ -8,6 +8,12 @@ use App\Http\Requests\UpdatePersonaRequest;
 
 class PersonaController extends Controller
 {
+    public function __construct() {
+        $this->middleware('can:personas.index')->only('index');
+        $this->middleware('can:personas.create')->only('create', 'store');
+        $this->middleware('can:personas.edit')->only('edit', 'update');
+        $this->middleware('can:personas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
+        return "Clientes personas";
     }
 
     /**
