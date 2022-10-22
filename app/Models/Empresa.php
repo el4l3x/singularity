@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Empresa extends Model
 {
     use HasFactory;
+
+    public function visitas()
+    {
+        return $this->morphMany(Visita::class, 'visitable');
+    }
+
+    public function direcciones()
+    {
+        return $this->morphOne(Direccione::class, 'direccioneable');
+    }
 }

@@ -10,9 +10,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class FranquiciaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:franquicias.index')->only('index');
+        $this->middleware('can:franquicias.create')->only('create', 'store');
+        $this->middleware('can:franquicias.edit')->only('edit', 'update');
+        $this->middleware('can:franquicias.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,6 +63,7 @@ class FranquiciaController extends Controller
             $franquicia = new Franquicia();
 
             $franquicia->nombre = $request->nombre;
+            $franquicia->slug = Str::slug($request->nombre);
             $franquicia->actividad = $request->actividad;
             $franquicia->rif = $request->rif;            
             $franquicia->control_factura = '00000000';
@@ -111,6 +120,7 @@ class FranquiciaController extends Controller
             DB::beginTransaction();
 
             $franquicia->nombre = $request->nombre;
+            $franquicia->slug = Str::slug($request->nombre);
             $franquicia->actividad = $request->actividad;
             $franquicia->rif = $request->rif;
             $franquicia->save();

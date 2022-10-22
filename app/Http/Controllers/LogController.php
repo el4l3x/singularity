@@ -8,6 +8,9 @@ use App\Http\Requests\UpdateLogRequest;
 
 class LogController extends Controller
 {  
+    public function __construct() {
+        $this->middleware('can:logs.index')->only('index');
+    }
     /**
      * Display a listing of the resource.
      *

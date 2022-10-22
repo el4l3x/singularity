@@ -4,6 +4,7 @@ use App\Http\Controllers\FranquiciaController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VisitaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,4 +37,6 @@ Route::middleware([
         'usuarios' => UsuarioController::class,
         'roles' => RoleController::class,
     ]);
+
+    Route::resource('franquicias.visitas', VisitaController::class)->shallow();
 });

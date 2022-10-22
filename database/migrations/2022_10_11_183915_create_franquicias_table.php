@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('franquicias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
+            $table->string('slug');
             $table->string('actividad');
             $table->string('rif');
             $table->string('control_factura')->default('00000000');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('factura')->default('00000000');
             $table->string('presupuesto')->default('00000000');
             $table->string('entrega')->default('00000000');
+            $table->string('visita')->default('00000000');
 
             $table->timestamps();
         });
