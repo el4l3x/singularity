@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StorePersonaRequest extends FormRequest
 {
@@ -13,7 +14,12 @@ class StorePersonaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('personas.create')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -24,7 +30,14 @@ class StorePersonaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'cedula' => 'required|integer|digits_between:6,8|unique:personas,cedula',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'telefono' => 'numeric|digits:7',
+            'code' => 'numeric|digits:4',
+            'estado' => 'required|exists:estados,id|integer',
+            'ciudad' => 'required',
+            'sector' => 'required',
         ];
     }
 }

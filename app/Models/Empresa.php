@@ -16,6 +16,6 @@ class Empresa extends Model
 
     public function direcciones()
     {
-        return $this->morphOne(Direccione::class, 'direccioneable');
+        return $this->morphMany(Direccione::class, 'direccioneable');
     }
 }

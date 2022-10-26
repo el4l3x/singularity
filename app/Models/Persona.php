@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,8 +15,24 @@ class Persona extends Model
         return $this->morphMany(Visita::class, 'visitable');
     }
 
-    public function direcciones()
+    public function direccion()
     {
         return $this->morphOne(Direccione::class, 'direccioneable');
+    }
+
+    protected function nombre(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value),
+        );
+    }
+
+    protected function apellido(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value),
+        );
     }
 }

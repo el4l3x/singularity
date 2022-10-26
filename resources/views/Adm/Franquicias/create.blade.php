@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    {{-- @livewire('security.logs-index') --}}    
+    {{-- @livewire('security.logs-index') --}}
     <div class="card">
         
         <div class="card-body">
@@ -38,7 +38,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <x-adminlte-input name="rif" label="RIF" placeholder="" enable-old-support>
+                            <x-adminlte-input name="rif" label="RIF" placeholder="" enable-old-support maxlength="9">
                                 <x-slot name="bottomSlot">
                                     @error('rif')
                                         <span class="invalid-feedback">{{ $message }}</span>

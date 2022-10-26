@@ -16,35 +16,7 @@
 
                     <form action="{{ route("personas.store") }}" method="post">
                         @csrf
-                        <div class="form-group">
-                            <x-adminlte-input name="cedula" label="Cedula" placeholder="" enable-old-support>
-                                <x-slot name="bottomSlot">
-                                    @error('cedula')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </x-slot>
-                            </x-adminlte-input>
-                        </div>
-                        
-                        <div class="form-group">
-                            <x-adminlte-input name="actividad" label="Actividad Economica" placeholder="" enable-old-support>
-                                <x-slot name="bottomSlot">
-                                    @error('actividad')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </x-slot>
-                            </x-adminlte-input>
-                        </div>
-                        
-                        <div class="form-group">
-                            <x-adminlte-input name="rif" label="RIF" placeholder="" enable-old-support>
-                                <x-slot name="bottomSlot">
-                                    @error('rif')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </x-slot>
-                            </x-adminlte-input>
-                        </div>
+                        @livewire('adm.create-persona')
 
                         <div class="form-group">
                             @php
@@ -53,28 +25,49 @@
                                 "allowClear" => false,
                                 "liveSearch" => true,
                                 "liveSearchPlaceholder" => "Buscar...",
-                                "title" => "Selecciona los usuarios...",
+                                "title" => "Selecciona el estado...",
                                 "showTick" => false,
                                 "actionsBox" => false,
                             ];
                             @endphp
-                            <x-adminlte-select2 id="usuarios" name="usuarios[]" label="Usuarios a cargo" label-class="text-white" :config="$configu" multiple enable-old-support>
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-tag"></i>
-                                    </div>
-                                </x-slot>
-
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <x-adminlte-select2 id="estado" name="estado" label="Estado" label-class="text-white" :config="$configu" enable-old-support>
+                                @foreach ($estados as $estado)
+                                    <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
                                 @endforeach
-
                             </x-adminlte-select2>
+                        </div>
+
+                        <div class="form-group">
+                            <x-adminlte-input name="ciudad" label="Ciudad" list="datalistCiudad" enable-old-support/>
+                            <x-slot name="bottomSlot">
+                                @error('ciudad')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </x-slot>
+                            <datalist id="datalistCiudad">
+                                @foreach ($ciudades as $ciudad)
+                                    <option value="{{ $ciudad->nombre }}">
+                                @endforeach
+                            </datalist>
+                        </div>
+                    
+                        <div class="form-group">
+                            <x-adminlte-input name="sector" label="Sector" list="datalistSector" enable-old-support/>
+                            <x-slot name="bottomSlot">
+                                @error('sector')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </x-slot>
+                            <datalist id="datalistSector">
+                                @foreach ($sectores as $sector)
+                                    <option value="{{ $sector->nombre }}">
+                                @endforeach
+                            </datalist>
                         </div>
                         
                         <div class="form-group">
                             <button class="btn btn-gray" type="submit">Guardar</button>
-                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.index") }}">Volver</a>
+                            <a class="btn btn-gray" role="button" href="{{ route("personas.index") }}">Volver</a>
                         </div>
                     </form>
 
@@ -99,6 +92,6 @@
 
 @section('js')    
     <script>        
-
+        
     </script>
 @stop

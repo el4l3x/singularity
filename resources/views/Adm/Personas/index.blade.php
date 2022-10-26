@@ -26,38 +26,40 @@
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>RIF</th>
-                                <th>Actividades</th>
+                                <th>Cedula</th>
+                                <th>Telefono</th>
+                                <th>Dirección</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($franquicias as $franquicia)
+                            @foreach ($personas as $persona)
                                 <tr>
-                                    <td>{{ $franquicia->nombre }}</td>
-                                    <td>{{ $franquicia->rif }}</td>
-                                    <td>{{ $franquicia->actividad }}</td>
+                                    <td>{{ $persona->nombre }} {{ $persona->apellido }}</td>
+                                    <td>{{ $persona->nacionalidad }}-{{ $persona->cedula }}</td>
+                                    <td>{{ $persona->telefono }}</td>
+                                    <td>{{ $persona->direccion->ciudade->estado->nombre }}-{{ $persona->direccion->ciudade->nombre }}, {{ $persona->direccion->sector }}</td>
                                     <td>
-                                        @can('franquicias.edit')
-                                            <a href="{{ route('franquicias.edit', $franquicia) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
+                                        @can('personas.edit')
+                                            <a href="{{ route('personas.edit', $persona) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
                                                 <i class="fa fa-fw fa-edit"></i>
                                             </a>                                            
                                         @endcan
 
-                                        @can('franquicias.destroy')
+                                        @can('personas.destroy')
                                             <button title="Eliminar" class="btn btn-xs btn-dark gray-text mx-1 shadow" onclick="event.preventDefault();
-                                            document.getElementById({{$franquicia->id}}).submit();">
+                                            document.getElementById({{$persona->id}}).submit();">
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
 
-                                            <form action="{{ route('franquicias.destroy', $franquicia) }}" method="post" id="{{$franquicia->id}}" class="d-none">
+                                            <form action="{{ route('personas.destroy', $persona) }}" method="post" id="{{$persona->id}}" class="d-none">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
                                         @endcan                                        
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 

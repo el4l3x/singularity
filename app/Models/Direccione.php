@@ -13,4 +13,9 @@ class Direccione extends Model
     {
         return $this->morphTo();
     }
+
+    public function ciudade()
+    {
+        return $this->belongsTo(Ciudade::class);
+    }
 }
