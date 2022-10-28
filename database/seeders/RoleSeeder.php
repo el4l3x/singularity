@@ -107,6 +107,23 @@ class RoleSeeder extends Seeder
             'name' => 'personas.destroy',
             'description' => 'Eliminar Cliente Personal',
         ])->syncRoles([$roleAdm]);
+        
+        Permission::create([
+            'name' => 'empresas.index',
+            'description' => 'Ver Clientes Empresariales',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'empresas.create',
+            'description' => 'Crear Cliente Empresarial',
+        ])->syncRoles([$roleAdm]);        
+        Permission::create([
+            'name' => 'empresas.edit',
+            'description' => 'Editar Cliente Empresarial',
+        ])->syncRoles([$roleAdm]);
+        Permission::create([
+            'name' => 'empresas.destroy',
+            'description' => 'Eliminar Cliente Empresarial',
+        ])->syncRoles([$roleAdm]);
 
         Permission::create([
             'name' => 'cobros.index',

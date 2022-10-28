@@ -322,6 +322,11 @@ return [
             'can'  => 'personas.index',
         ],
         [
+            'text' => 'Empresas',
+            'route' => 'empresas.index',
+            'can' => 'personas.index',
+        ],
+        [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',

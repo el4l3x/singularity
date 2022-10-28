@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Personas')
+@section('title', 'Empresas')
 
 @section('content_header')
-    <h1>Nuevo Cliente Personal</h1>
+    <h1>Nuevo Cliente Empresarial</h1>
 @stop
 
 @section('content')
@@ -14,12 +14,58 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <form action="{{ route("personas.store") }}" method="post">
+                    <form action="{{ route("empresas.store") }}" method="post">
                         @csrf
-                        <h5>Datos Personales</h5>
+
+                        <h5>Datos de la Empresa</h5>
                         <hr>
 
-                        @livewire('adm.create-persona')
+                        <div class="row">
+                            <x-adminlte-input name="rif" label="RIF" placeholder="" enable-old-support maxlength="9" fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                                <x-slot name="prependSlot">
+                                    <select name="tipo" class="form-control">
+                                        <option value="j">J</option>
+                                        <option value="g">G</option>
+                                    </select>
+                                </x-slot>
+                                <x-slot name="bottomSlot">
+                                    @error('cedula')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
+                            </x-adminlte-input>
+                        {{-- </div>
+                    
+                        <div class="form-group"> --}}
+                            <x-adminlte-input name="nombre" label="Nombre" placeholder="" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                                <x-slot name="bottomSlot">
+                                    @error('nombre')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
+                            </x-adminlte-input>
+                        </div>
+                    
+                        <div class="row">
+                    
+                            <x-adminlte-input name="telefono" label="Telefono" placeholder="" enable-old-support maxlength="7" fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                                <x-slot name="prependSlot">
+                                    <x-adminlte-select name="codigo">
+                                        <option value="0414">0414</option>
+                                        <option value="0424">0424</option>
+                                        <option value="0412">0412</option>
+                                        <option value="0416">0416</option>
+                                        <option value="0426">0426</option>
+                                    </x-adminlte-select>
+                                </x-slot>
+                                <x-slot name="bottomSlot">
+                                    @error('telefono')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
+                            </x-adminlte-input>
+                    
+                        </div>
 
                         <h5>Direccion</h5>
                         <hr>

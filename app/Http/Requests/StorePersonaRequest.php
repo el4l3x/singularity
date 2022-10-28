@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StorePersonaRequest extends FormRequest
 {
@@ -31,6 +32,11 @@ class StorePersonaRequest extends FormRequest
     {
         return [
             'cedula' => 'required|integer|digits_between:6,8|unique:personas,cedula',
+            'nacionalidad' => [
+                'required',
+                'alpha', 
+                Rule::in(['v', 'e']),
+            ],
             'nombre' => 'required',
             'apellido' => 'required',
             'telefono' => 'numeric|digits:7',

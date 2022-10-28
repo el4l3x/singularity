@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\FranquiciaController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\PersonaController;
@@ -38,6 +39,7 @@ Route::middleware([
         'usuarios' => UsuarioController::class,
         'roles' => RoleController::class,
         'personas' => PersonaController::class,
+        'empresas' => EmpresaController::class,
     ]);
 
     Route::resource('franquicias.visitas', VisitaController::class)->shallow();

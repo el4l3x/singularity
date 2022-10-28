@@ -65,6 +65,7 @@ class PersonaController extends Controller
 
             $persona = new Persona();
             $persona->cedula = $request->cedula;
+            $persona->nacionalidad = $request->nacionalidad;
             $persona->nombre = $request->nombre;
             $persona->apellido = $request->apellido;
             $persona->telefono = $request->codigo.' '.$request->telefono;

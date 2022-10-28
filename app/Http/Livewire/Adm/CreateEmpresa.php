@@ -3,28 +3,18 @@
 namespace App\Http\Livewire\Adm;
 
 use Livewire\Component;
-use Goutte\Client;
 
-class CreatePersona extends Component
+class CreateEmpresa extends Component
 {
-    public $cedula;
-    public $errorci;
+    public $rif;
+    public $error;
     public $readonly = false;
     public $nombre;
-    public $apellido;
-    public $estados;
-    public $ciudades;
-    public $sectores;
-    public $load = 1;
-
-    /* public function mount($estados)
-    {
-        $this->nombres = $estados->nombre;
-    } */
+    public $load = "Buscar";
 
     public function buscarci()
     {
-        $this->load = 2;
+        $this->load = "Buscando...";
         try {
             $client = new Client();
             $crawler = $client->request('GET', 'http://www.cne.gob.ve/web/registro_electoral/ce.php?nacionalidad=V&cedula='.$this->cedula);
@@ -74,9 +64,7 @@ class CreatePersona extends Component
                         break;
                 }
 
-                $this->load = 1;
-
-                /* return $nombres; */
+                $this->load = "Buscar";
                 
             }else {
                 switch ($Condi) {
@@ -111,7 +99,7 @@ class CreatePersona extends Component
                         $this->readonly = false;
                 }
 
-                $this->load = 1;
+                $this->load = "Buscar";
             }
         } catch (\Throwable $th) {
             $this->nombre = null;
@@ -119,12 +107,12 @@ class CreatePersona extends Component
             $this->errorci = "No encontramos registros de esta C.I";
             $this->readonly = false;
 
-            $this->load = 1;
+            $this->load = "Buscar";
         }
     }
 
     public function render()
     {
-        return view('livewire.adm.create-persona');
+        return view('livewire.adm.create-empresa');
     }
 }
