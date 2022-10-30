@@ -52,7 +52,7 @@
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
 
-                                            <form action="{{ route('personas.destroy', $empresa) }}" method="post" id="{{$empresa->id}}" class="d-none">
+                                            <form action="{{ route('empresas.destroy', $empresa) }}" method="post" id="{{$empresa->id}}" class="d-none">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateEmpresaRequest extends FormRequest
 {
@@ -13,7 +14,12 @@ class UpdateEmpresaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('empresas.edit')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -24,7 +30,12 @@ class UpdateEmpresaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required',
+            'codigo' => 'numeric:digits:4',
+            'telefono' => 'numeric|digits:7',
+            'estado' => 'required|exists:estados,id|integer',
+            'ciudad' => 'required',
+            'sector' => 'required',
         ];
     }
 }

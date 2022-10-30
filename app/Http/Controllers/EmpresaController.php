@@ -136,7 +136,21 @@ class EmpresaController extends Controller
      */
     public function edit(Empresa $empresa)
     {
-        //
+        $ciudades = Ciudade::all();
+        $estados = Estado::all();
+        $sectores = Direccione::all();
+        $telefono = explode(" ", $empresa->telefono);
+        $code = $telefono[0];
+        $numero = $telefono[1];
+
+        return view('Adm.Empresas.edit', [
+            'empresa' => $empresa,
+            'ciudades' => $ciudades,
+            'estados' => $estados,
+            'sectores' => $sectores,
+            'code' => $code,
+            'numero' => $numero,
+        ]);
     }
 
     /**
@@ -148,7 +162,51 @@ class EmpresaController extends Controller
      */
     public function update(UpdateEmpresaRequest $request, Empresa $empresa)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $empresa->nombre = $request->nombre;
+            $empresa->telefono = $request->codigo.' '.$request->telefono;
+            $empresa->save();
+
+            $log = new Log();
+            $log->accion = "Editar empresa ".$empresa->nombre." (".$empresa->id.")";
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            $selectCiudad = Ciudade::where('estado_id', $request->estado)->where('nombre', $request->ciudad)->first();
+            if (isset($selectCiudad->id)) {
+                $empresa->direccion->sector = $request->sector;
+                $empresa->direccion->ciudade_id = $selectCiudad->id;
+                $empresa->push();    
+                
+                $log = new Log();
+                $log->accion = "Editar direccion (".$empresa->direccion->id.") para empresa ".$empresa->nombre." (".$empresa->id.")";
+                $log->user_id = Auth::user()->id;
+                $log->save();
+            } else {
+                $ciudad = new Ciudade();
+                $ciudad->nombre = $request->ciudad;
+                $ciudad->estado_id = $request->estado;
+                $ciudad->save();
+
+                $empresa->direccion->sector = $request->sector;
+                $empresa->direccion->ciudade_id = $ciudad->id;
+                $empresa->push();
+
+                $log = new Log();
+                $log->accion = 'Editar ciudad '.$ciudad->nombre.' ('.$ciudad->id.') y direccion '.'('.$empresa->direccion->id.') para empresa '.$empresa->nombre.' ('.$empresa->id.')';
+                $log->user_id = Auth::user()->id;
+                $log->save();
+            }
+
+            DB::commit();
+
+            return redirect()->route('empresas.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -159,6 +217,24 @@ class EmpresaController extends Controller
      */
     public function destroy(Empresa $empresa)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $empresa->direccion->delete();
+
+            $empresa->delete();
+
+            $log = new Log();
+            $log->accion = "Eliminar empresa ".$empresa->id."-".$empresa->nombre;
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route('empresas.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 }

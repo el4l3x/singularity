@@ -179,6 +179,7 @@ class PersonaController extends Controller
             $selectCiudad = Ciudade::where('estado_id', $request->estado)->where('nombre', $request->ciudad)->first();
             if (isset($selectCiudad->id)) {
                 $persona->direccion->sector = $request->sector;
+                $persona->direccion->ciudade_id = $selectCiudad->id;
                 $persona->push();    
                 
                 $log = new Log();
