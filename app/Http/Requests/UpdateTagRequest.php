@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class UpdateProductosRequest extends FormRequest
+class UpdateTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,12 @@ class UpdateProductosRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('tags.edit')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -24,7 +30,7 @@ class UpdateProductosRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required|unique:tags,nombre,'.$this->etiqueta->id,
         ];
     }
 }

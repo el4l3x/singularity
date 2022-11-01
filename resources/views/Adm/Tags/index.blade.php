@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Personas')
+@section('title', 'Etiquetas')
 
 @section('content_header')
-    @can('personas.create')
-        <a class="btn btn-gray btn-sm float-right" type="button" href="{{ route('personas.create') }}">Nuevo Cliente Personal</a>
+    @can('tags.create')
+        <a class="btn btn-gray btn-sm float-right" type="button" href="{{ route('etiquetas.create') }}">Nueva Etiqueta</a>
     @endcan
-    <h3>Clientes Personales</h3>
+    <h3>Etiquetas para Productos y Servicios</h3>
 @stop
 
 @section('content')
@@ -22,37 +22,33 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <table id="personas-table" class="table table-dark table-hover responsive">
+                    <table id="empresas-table" class="table table-dark table-hover responsive">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Cedula</th>
-                                <th>Telefono</th>
-                                <th>Dirección</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($personas as $persona)
+                            @foreach ($tags as $tag)
                                 <tr>
-                                    <td>{{ $persona->nombre }} {{ $persona->apellido }}</td>
-                                    <td>{{ $persona->nacionalidad }}-{{ $persona->cedula }}</td>
-                                    <td>{{ $persona->telefono }}</td>
-                                    <td>{{ $persona->direccion->ciudade->estado->nombre }}-{{ $persona->direccion->ciudade->nombre }}, {{ $persona->direccion->sector }}</td>
+                                    <td>{{ $tag->id }}</td>
+                                    <td>{{ $tag->nombre }}</td>
                                     <td>
-                                        @can('personas.edit')
-                                            <a href="{{ route('personas.edit', $persona) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
+                                        @can('tags.edit')
+                                            <a href="{{ route('etiquetas.edit', $tag) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
                                                 <i class="fa fa-fw fa-edit"></i>
                                             </a>                                            
                                         @endcan
 
-                                        @can('personas.destroy')
+                                        @can('tags.destroy')
                                             <button title="Eliminar" class="btn btn-xs btn-dark gray-text mx-1 shadow" onclick="event.preventDefault();
-                                            document.getElementById({{$persona->id}}).submit();">
+                                            document.getElementById({{$tag->id}}).submit();">
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
 
-                                            <form action="{{ route('personas.destroy', $persona) }}" method="post" id="{{$persona->id}}" class="d-none">
+                                            <form action="{{ route('etiquetas.destroy', $tag) }}" method="post" id="{{$tag->id}}" class="d-none">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
@@ -104,7 +100,7 @@
     <script>        
         $(function () {
 
-            var tablita = $("#personas-table").DataTable({
+            var tablita = $("#empresas-table").DataTable({
                 "language": {
                     "search": "Buscar:",
                     "emptyTable": "No hay registros",

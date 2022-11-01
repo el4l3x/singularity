@@ -17,33 +17,35 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $roleAdm = Role::create(['name' => 'Admin']);
+        $roleObs = Role::create(['name' => 'Observador']);
+        $roleSoc = Role::create(['name' => 'Socio']);
 
         Permission::create([
             'name' => 'logs.index',
             'description' => 'Ver Bitacora',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         
         Permission::create([
             'name' => 'franquicias.index',
             'description' => 'Ver Franquicias',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
         Permission::create([
             'name' => 'franquicias.create',
             'description' => 'Crear Franquicia',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleSoc]);        
         Permission::create([
             'name' => 'franquicias.edit',
             'description' => 'Editar Franquicia',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         Permission::create([
             'name' => 'franquicias.destroy',
             'description' => 'Eliminar Franquicia',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         
         Permission::create([
             'name' => 'users.index',
             'description' => 'Ver Usuarios',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
         Permission::create([
             'name' => 'users.create',
             'description' => 'Crear Usuario',
@@ -60,7 +62,7 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'roles.index',
             'description' => 'Ver Roles',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
         Permission::create([
             'name' => 'roles.create',
             'description' => 'Crear Rol',
@@ -77,53 +79,87 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'visitas.index',
             'description' => 'Ver Hojas de Visitas',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
         Permission::create([
             'name' => 'visitas.create',
             'description' => 'Crear Hoja de Visita',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleSoc]);        
         Permission::create([
             'name' => 'visitas.edit',
             'description' => 'Editar Hoja de Visita',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         Permission::create([
             'name' => 'visitas.destroy',
             'description' => 'Eliminar Hoja de Visita',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         
         Permission::create([
             'name' => 'personas.index',
             'description' => 'Ver Clientes Personales',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
         Permission::create([
             'name' => 'personas.create',
             'description' => 'Crear Cliente Personal',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleSoc]);        
         Permission::create([
             'name' => 'personas.edit',
             'description' => 'Editar Cliente Personal',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         Permission::create([
             'name' => 'personas.destroy',
             'description' => 'Eliminar Cliente Personal',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         
         Permission::create([
             'name' => 'empresas.index',
             'description' => 'Ver Clientes Empresariales',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
         Permission::create([
             'name' => 'empresas.create',
             'description' => 'Crear Cliente Empresarial',
-        ])->syncRoles([$roleAdm]);        
+        ])->syncRoles([$roleAdm, $roleSoc]);        
         Permission::create([
             'name' => 'empresas.edit',
             'description' => 'Editar Cliente Empresarial',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
         Permission::create([
             'name' => 'empresas.destroy',
             'description' => 'Eliminar Cliente Empresarial',
-        ])->syncRoles([$roleAdm]);
+        ])->syncRoles([$roleAdm, $roleSoc]);
+
+        Permission::create([
+            'name' => 'tags.index',
+            'description' => 'Ver Etiquetas',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
+        Permission::create([
+            'name' => 'tags.create',
+            'description' => 'Crear Etiqueta',
+        ])->syncRoles([$roleAdm, $roleSoc]);        
+        Permission::create([
+            'name' => 'tags.edit',
+            'description' => 'Editar Etiqueta',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        Permission::create([
+            'name' => 'tags.destroy',
+            'description' => 'Eliminar Etiqueta',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        
+        Permission::create([
+            'name' => 'productos.index',
+            'description' => 'Ver Productos',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
+        Permission::create([
+            'name' => 'productos.create',
+            'description' => 'Crear Producto',
+        ])->syncRoles([$roleAdm, $roleSoc]);        
+        Permission::create([
+            'name' => 'productos.edit',
+            'description' => 'Editar Producto',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        Permission::create([
+            'name' => 'productos.destroy',
+            'description' => 'Eliminar Producto',
+        ])->syncRoles([$roleAdm, $roleSoc]);
 
         Permission::create([
             'name' => 'cobros.index',

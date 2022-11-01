@@ -37,7 +37,7 @@ class StoreEmpresaRequest extends FormRequest
                 'alpha',
                 Rule::in(['j', 'g']),
             ],
-            'nombre' => 'required',
+            'nombre' => 'required|unique:empresas,nombre',
             'codigo' => 'numeric:digits:4',
             'telefono' => 'numeric|digits:7',
             'estado' => 'required|exists:estados,id|integer',

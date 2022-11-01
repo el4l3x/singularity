@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Personas')
+@section('title', 'Productos')
 
 @section('content_header')
-    @can('personas.create')
-        <a class="btn btn-gray btn-sm float-right" type="button" href="{{ route('personas.create') }}">Nuevo Cliente Personal</a>
+    @can('productos.create')
+        <a class="btn btn-gray btn-sm float-right" type="button" href="{{ route('productos.create') }}">Nuevo Producto</a>
     @endcan
-    <h3>Clientes Personales</h3>
+    <h3>Productos</h3>
 @stop
 
 @section('content')
@@ -22,37 +22,43 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <table id="personas-table" class="table table-dark table-hover responsive">
+                    <table id="productos-table" class="table table-dark table-hover responsive">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Cedula</th>
-                                <th>Telefono</th>
-                                <th>Dirección</th>
+                                <th>Precio</th>
+                                <th>Etiquetas</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($personas as $persona)
+                            @foreach ($productos as $producto)
                                 <tr>
-                                    <td>{{ $persona->nombre }} {{ $persona->apellido }}</td>
-                                    <td>{{ $persona->nacionalidad }}-{{ $persona->cedula }}</td>
-                                    <td>{{ $persona->telefono }}</td>
-                                    <td>{{ $persona->direccion->ciudade->estado->nombre }}-{{ $persona->direccion->ciudade->nombre }}, {{ $persona->direccion->sector }}</td>
+                                    <td>{{ $producto->nombre }}</td>
+                                    <td>{{ $producto->precio }}</td>
                                     <td>
-                                        @can('personas.edit')
-                                            <a href="{{ route('personas.edit', $persona) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
+                                        @foreach ($producto->tags as $tag)
+                                            @if ($loop->last)
+                                                {{ $tag->nombre }}
+                                            @else
+                                                {{ $tag->nombre }} -
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @can('productos.edit')
+                                            <a href="{{ route('productos.edit', $producto) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
                                                 <i class="fa fa-fw fa-edit"></i>
                                             </a>                                            
                                         @endcan
 
-                                        @can('personas.destroy')
+                                        @can('productos.destroy')
                                             <button title="Eliminar" class="btn btn-xs btn-dark gray-text mx-1 shadow" onclick="event.preventDefault();
-                                            document.getElementById({{$persona->id}}).submit();">
+                                            document.getElementById({{$producto->id}}).submit();">
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
 
-                                            <form action="{{ route('personas.destroy', $persona) }}" method="post" id="{{$persona->id}}" class="d-none">
+                                            <form action="{{ route('productos.destroy', $producto) }}" method="post" id="{{$producto->id}}" class="d-none">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
@@ -104,7 +110,7 @@
     <script>        
         $(function () {
 
-            var tablita = $("#personas-table").DataTable({
+            var tablita = $("#productos-table").DataTable({
                 "language": {
                     "search": "Buscar:",
                     "emptyTable": "No hay registros",

@@ -317,14 +317,36 @@ return [
             'can'    => 'franquicias.index',
         ],
         [
-            'text' => 'Personas',
-            'route'  => 'personas.index',
-            'can'  => 'personas.index',
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Empresas',
+                    'route' => 'empresas.index',
+                    'can' => 'personas.index',
+                ],
+                [
+                    'text' => 'Personas',
+                    'route'  => 'personas.index',
+                    'can'  => 'personas.index',
+                ],
+            ],
         ],
         [
-            'text' => 'Empresas',
-            'route' => 'empresas.index',
-            'can' => 'personas.index',
+            'text'    => 'Inventarios',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Etiquetas',
+                    'route'  => 'etiquetas.index',
+                    'can'  => 'tags.index',
+                ],
+                [
+                    'text' => 'Productos',
+                    'route'  => 'productos.index',
+                    'can'  => 'productos.index',
+                ],
+            ],
         ],
         [
             'text'        => 'pages',

@@ -3,7 +3,7 @@
 @section('title', 'Empresas')
 
 @section('content_header')
-    @can('visitas.create')
+    @can('empresas.create')
         <a class="btn btn-gray btn-sm float-right" type="button" href="{{ route('empresas.create') }}">Nuevo Cliente Empresarial</a>
     @endcan
     <h3>Clientes Empresariales</h3>
@@ -40,13 +40,13 @@
                                     <td>{{ $empresa->telefono }}</td>
                                     <td>{{ $empresa->direccion->ciudade->estado->nombre }}-{{ $empresa->direccion->ciudade->nombre }}, {{ $empresa->direccion->sector }}</td>
                                     <td>
-                                        @can('personas.edit')
+                                        @can('empresas.edit')
                                             <a href="{{ route('empresas.edit', $empresa) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
                                                 <i class="fa fa-fw fa-edit"></i>
                                             </a>                                            
                                         @endcan
 
-                                        @can('personas.destroy')
+                                        @can('empresas.destroy')
                                             <button title="Eliminar" class="btn btn-xs btn-dark gray-text mx-1 shadow" onclick="event.preventDefault();
                                             document.getElementById({{$empresa->id}}).submit();">
                                                 <i class="fa fa-fw fa-trash"></i>

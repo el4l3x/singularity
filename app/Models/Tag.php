@@ -6,25 +6,25 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Franquicia extends Model
+class Tag extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function productos()
     {
-        return $this->belongsToMany(User::class);
+        return $this->morphedByMany(Producto::class, 'taggable');
     }
 
-    public function getRouteKeyName()
+    public function servicios()
     {
-        return "slug";
+        return $this->morphedByMany(Servicios::class, 'taggable');
     }
 
     protected function nombre(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower($value),
             get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value),
         );
     }
 }

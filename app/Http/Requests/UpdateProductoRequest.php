@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateEmpresaRequest extends FormRequest
+class UpdateProductoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class UpdateEmpresaRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check() && Auth::user()->hasPermissionTo('empresas.edit')) {
+        if (Auth::check() && Auth::user()->hasPermissionTo('productos.edit')) {
             return true;
         } else {
             return false;
@@ -30,12 +30,12 @@ class UpdateEmpresaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|unique:empresas,nombre,'.$this->empresa->id,
-            'codigo' => 'numeric:digits:4',
-            'telefono' => 'numeric|digits:7',
-            'estado' => 'required|exists:estados,id|integer',
-            'ciudad' => 'required',
-            'sector' => 'required',
+            'nombre' => 'required|unique:productos,nombre,'.$this->producto->id,
+            'precio' => [ 
+                'required',
+                'numeric',
+            ],
+            'etiquetas' => 'array',
         ];
     }
 }
