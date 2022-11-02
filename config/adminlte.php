@@ -346,6 +346,11 @@ return [
                     'route'  => 'productos.index',
                     'can'  => 'productos.index',
                 ],
+                [
+                    'text' => 'Servicios',
+                    'route'  => 'servicios.index',
+                    'can'  => 'servicios.index',
+                ],
             ],
         ],
         [

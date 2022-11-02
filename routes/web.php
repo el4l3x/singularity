@@ -5,8 +5,8 @@ use App\Http\Controllers\FranquiciaController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VisitaController;
@@ -44,6 +44,7 @@ Route::middleware([
         'personas' => PersonaController::class,
         'empresas' => EmpresaController::class,
         'productos' => ProductoController::class,
+        'servicios' => ServicioController::class,
         'etiquetas' => TagController::class,
     ]);
 
