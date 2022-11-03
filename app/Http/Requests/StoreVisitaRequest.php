@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreVisitaRequest extends FormRequest
 {
@@ -13,7 +15,12 @@ class StoreVisitaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('visitas.create')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -24,7 +31,16 @@ class StoreVisitaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'entrada' => 'required',
+            'salida' => '',
+            'tipo' => [
+                'required',
+                'alpha',
+                Rule::in(['p', 'e']),
+            ],
+            'cliente' => 'required|integer',
+            'productos' => 'array',
+            'servicios' => 'array',
         ];
     }
 }

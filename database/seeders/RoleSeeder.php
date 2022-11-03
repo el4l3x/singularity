@@ -79,6 +79,10 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'visitas.index',
             'description' => 'Ver Hojas de Visitas',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
+        Permission::create([
+            'name' => 'visitas.show',
+            'description' => 'Ver detalles de Hoja de Visita',
         ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
         Permission::create([
             'name' => 'visitas.create',

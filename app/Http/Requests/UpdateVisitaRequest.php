@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateVisitaRequest extends FormRequest
 {
@@ -13,7 +14,12 @@ class UpdateVisitaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('visitas.edit')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -24,7 +30,10 @@ class UpdateVisitaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'entrada' => 'required',
+            'salida' => '',
+            'productos' => 'array',
+            'servicios' => 'array',
         ];
     }
 }

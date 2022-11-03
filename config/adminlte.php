@@ -323,11 +323,13 @@ return [
                 [
                     'text' => 'Empresas',
                     'route' => 'empresas.index',
+                    'active' => ['empresas*'],
                     'can' => 'personas.index',
                 ],
                 [
                     'text' => 'Personas',
                     'route'  => 'personas.index',
+                    'active' => ['personas*'],
                     'can'  => 'personas.index',
                 ],
             ],
@@ -339,16 +341,19 @@ return [
                 [
                     'text' => 'Etiquetas',
                     'route'  => 'etiquetas.index',
+                    'active' => ['etiquetas*'],
                     'can'  => 'tags.index',
                 ],
                 [
                     'text' => 'Productos',
                     'route'  => 'productos.index',
+                    'active' => ['productos*'],
                     'can'  => 'productos.index',
                 ],
                 [
                     'text' => 'Servicios',
                     'route'  => 'servicios.index',
+                    'active' => ['servicios*'],
                     'can'  => 'servicios.index',
                 ],
             ],
@@ -519,6 +524,26 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'TempusDominusBs4' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor\moment\moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor\tempusdominus-bootstrap-4\js\tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor\tempusdominus-bootstrap-4\css\tempusdominus-bootstrap-4.min.css',
                 ],
             ],
         ],

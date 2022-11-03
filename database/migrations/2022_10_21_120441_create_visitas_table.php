@@ -16,11 +16,14 @@ return new class extends Migration
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
             $table->string('slug');
-            $table->time('entrada', 3);
-            $table->time('salida', 3);
-            $table->string('descripcion');
+            $table->time('entrada');
+            $table->time('salida')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->unsignedBigInteger('franquicia_id');
             $table->unsignedBigInteger('visitable_id');
             $table->string('visitable_type');
+
+            $table->foreign('franquicia_id')->references('id')->on('franquicias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

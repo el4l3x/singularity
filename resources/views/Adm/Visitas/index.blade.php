@@ -25,39 +25,47 @@
                     <table id="visitas-table" class="table table-dark table-hover responsive">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>RIF</th>
-                                <th>Actividades</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>H. Entrada</th>
+                                <th>H. Salida</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($franquicias as $franquicia)
+                            @foreach ($visitas as $visita)
                                 <tr>
-                                    <td>{{ $franquicia->nombre }}</td>
-                                    <td>{{ $franquicia->rif }}</td>
-                                    <td>{{ $franquicia->actividad }}</td>
+                                    <td>{{ $visita->created_at }}</td>
+                                    <td>{{ $visita->visitable->nombre }}</td>
+                                    <td>{{ $visita->entrada }}</td>
+                                    <td>{{ $visita->salida }}</td>
                                     <td>
-                                        @can('franquicias.edit')
-                                            <a href="{{ route('franquicias.edit', $franquicia) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
+                                        @can('visitas.show')
+                                            <a href="{{ route('visitas.show', $visita) }}" title="Ver Detalles" class="btn btn-xs btn-dark gray-text mx-1 shadow">
+                                                <i class="fa fa-fw fa-search"></i>
+                                            </a>                                            
+                                        @endcan
+                                        
+                                        @can('visitas.edit')
+                                            <a href="{{ route('visitas.edit', $visita) }}" title="Editar" class="btn btn-xs btn-dark gray-text mx-1 shadow">
                                                 <i class="fa fa-fw fa-edit"></i>
                                             </a>                                            
                                         @endcan
 
-                                        @can('franquicias.destroy')
+                                        @can('visitas.destroy')
                                             <button title="Eliminar" class="btn btn-xs btn-dark gray-text mx-1 shadow" onclick="event.preventDefault();
-                                            document.getElementById({{$franquicia->id}}).submit();">
+                                            document.getElementById({{$visita->id}}).submit();">
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
 
-                                            <form action="{{ route('franquicias.destroy', $franquicia) }}" method="post" id="{{$franquicia->id}}" class="d-none">
+                                            <form action="{{ route('visitas.destroy', $visita) }}" method="post" id="{{$visita->id}}" class="d-none">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
                                         @endcan                                        
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 

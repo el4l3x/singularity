@@ -16,57 +16,83 @@
 
                     <form action="{{ route("franquicias.visitas.store", $franquicia) }}" method="post">
                         @csrf
-                        <div class="form-group">
-                            <x-adminlte-input name="nombre" label="Nombre" placeholder="" enable-old-support>
+                        <div class="row">
+                            @php
+                                $config = ['format' => 'HH:mm'];
+                            @endphp
+                            <x-adminlte-input-date name="entrada" :config="$config" enable-old-support label="Hora de Entrada" fgroup-class="col-lg-6 col-md-6 col-sm-12">
                                 <x-slot name="bottomSlot">
-                                    @error('nombre')
+                                    @error('entrada')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </x-slot>
-                            </x-adminlte-input>
-                        </div>
-                        
-                        <div class="form-group">
-                            <x-adminlte-input name="actividad" label="Actividad Economica" placeholder="" enable-old-support>
-                                <x-slot name="bottomSlot">
-                                    @error('actividad')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </x-slot>
-                            </x-adminlte-input>
-                        </div>
-                        
-                        <div class="form-group">
-                            <x-adminlte-input name="rif" label="RIF" placeholder="" enable-old-support>
-                                <x-slot name="bottomSlot">
-                                    @error('rif')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </x-slot>
-                            </x-adminlte-input>
-                        </div>
 
-                        <div class="form-group">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-input-date>
+                            
+                            @php
+                                $config = ['format' => 'HH:mm'];
+                            @endphp
+                            <x-adminlte-input-date name="salida" :config="$config" enable-old-support label="Hora de Salida" fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                                <x-slot name="bottomSlot">
+                                    @error('salida')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
+
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-input-date>
+                    
+                        </div>
+                        
+                        @livewire('adm.create-visita', [
+                            'personas' => $personas,
+                            'empresas' => $empresas
+                        ])
+
+                        <div class="row">
                             @php
                             $configu = [
                                 "placeholder" => "",
                                 "allowClear" => false,
                                 "liveSearch" => true,
                                 "liveSearchPlaceholder" => "Buscar...",
-                                "title" => "Selecciona los usuarios...",
+                                "title" => "Selecciona los productos...",
                                 "showTick" => false,
                                 "actionsBox" => false,
                             ];
                             @endphp
-                            <x-adminlte-select2 id="usuarios" name="usuarios[]" label="Usuarios a cargo" label-class="text-white" :config="$configu" multiple enable-old-support>
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-tag"></i>
-                                    </div>
-                                </x-slot>
+                            <x-adminlte-select2 id="productos" name="productos[]" label="Productos" label-class="text-white" :config="$configu" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12" multiple>
 
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @foreach ($productos as $producto)
+                                    <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
+                                @endforeach
+
+                            </x-adminlte-select2>
+                            
+                            @php
+                            $configu = [
+                                "placeholder" => "",
+                                "allowClear" => false,
+                                "liveSearch" => true,
+                                "liveSearchPlaceholder" => "Buscar...",
+                                "title" => "Selecciona los servicios...",
+                                "showTick" => false,
+                                "actionsBox" => false,
+                            ];
+                            @endphp
+                            <x-adminlte-select2 id="servicios" name="servicios[]" label="Servicios" label-class="text-white" :config="$configu" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12" multiple>
+
+                                @foreach ($servicios as $servicio)
+                                    <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
                                 @endforeach
 
                             </x-adminlte-select2>
@@ -74,7 +100,7 @@
                         
                         <div class="form-group">
                             <button class="btn btn-gray" type="submit">Guardar</button>
-                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.index") }}">Volver</a>
+                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.visitas.index", $franquicia) }}">Volver</a>
                         </div>
                     </form>
 
@@ -87,6 +113,7 @@
 @stop
 
 @section('plugins.Select2', true)
+@section('plugins.TempusDominusBs4', true)
 
 @section('css')
     <style>

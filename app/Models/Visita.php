@@ -21,11 +21,16 @@ class Visita extends Model
 
     public function servicios()
     {
-        return $this->morphedByMany(Servicios::class, 'visitable');
+        return $this->morphedByMany(Servicio::class, 'visitable');
     }
 
     public function productos()
     {
-        return $this->morphedByMany(Productos::class, 'visitable');
+        return $this->morphedByMany(Producto::class, 'visitable');
+    }
+
+    public function franquicia()
+    {
+        return $this->belongsTo(Franquicia::class);
     }
 }

@@ -15,6 +15,11 @@ class Franquicia extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function visitas()
+    {
+        return $this->hasMany(Visita::class);
+    }
+
     public function getRouteKeyName()
     {
         return "slug";
