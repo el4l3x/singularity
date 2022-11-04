@@ -136,6 +136,11 @@
 
                         <div class="row">
                             <x-adminlte-textarea name="descripcion" label="Observaciones" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                                <x-slot name="bottomSlot">
+                                    @error('descripcion')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
                             </x-adminlte-textarea>
                         </div>
                         

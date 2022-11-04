@@ -1,26 +1,45 @@
 <div>
     <div class="row">
-        <x-adminlte-input name="cedula" label="C.I" placeholder="" enable-old-support wire:model="cedula" maxlength="8" fgroup-class="col-lg-6 col-md-6 col-sm-12">
-            <x-slot name="appendSlot">
-                @if ($load == 2)
-                    <x-adminlte-button wire:click="buscarci" label="Buscando"/>
-                @else                    
-                    <x-adminlte-button wire:click="buscarci" label="Buscar"/>
-                @endif
-            </x-slot>
-            <x-slot name="prependSlot">
-                <select name="nacionalidad" class="form-control">
-                    <option value="v">V</option>
-                    <option value="e">E</option>
-                </select>
-            </x-slot>
-            <x-slot name="bottomSlot">
-                <span class="text-danger">{{ $errorci }}</span>
-                @error('cedula')
-                    <span class="invalid-feedback">{{ $message }}</span>
-                @enderror
-            </x-slot>
-        </x-adminlte-input>
+        @if ($readonly)
+            <x-adminlte-input readonly name="cedula" label="C.I" placeholder="" enable-old-support wire:model="cedula" maxlength="8" fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                <x-slot name="appendSlot">
+                    <x-adminlte-button wire:click="limpiar" label="Limpiar"/>
+                </x-slot>
+                <x-slot name="prependSlot">
+                    <select name="nacionalidad" class="form-control">
+                        <option value="v">V</option>
+                        <option value="e">E</option>
+                    </select>
+                </x-slot>
+                <x-slot name="bottomSlot">
+                    <span class="text-danger">{{ $errorci }}</span>
+                    @error('cedula')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </x-slot>
+            </x-adminlte-input>
+        @else
+            <x-adminlte-input name="cedula" label="C.I" placeholder="" enable-old-support wire:model="cedula" maxlength="8" fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                <x-slot name="appendSlot">
+                    <div class="input-group-text" wire:loading wire:target="buscarci">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <x-adminlte-button wire:click="buscarci" label="Buscar"/>                    
+                </x-slot>
+                <x-slot name="prependSlot">
+                    <select name="nacionalidad" class="form-control">
+                        <option value="v">V</option>
+                        <option value="e">E</option>
+                    </select>
+                </x-slot>
+                <x-slot name="bottomSlot">
+                    <span class="text-danger">{{ $errorci }}</span>
+                    @error('cedula')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </x-slot>
+            </x-adminlte-input>
+        @endif
     {{-- </div>
 
     <div class="form-group"> --}}

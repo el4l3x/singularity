@@ -15,22 +15,25 @@ class CreatePersona extends Component
     public $estados;
     public $ciudades;
     public $sectores;
-    public $load = 1;
 
-    /* public function mount($estados)
+    public function limpiar()
     {
-        $this->nombres = $estados->nombre;
-    } */
+        $this->readonly = false;
+        $this->cedula = null;
+        $this->nombre = null;
+        $this->apellido = null;
+    }
 
     public function buscarci()
     {
-        $this->load = 2;
         try {
             $client = new Client();
             $crawler = $client->request('GET', 'http://www.cne.gob.ve/web/registro_electoral/ce.php?nacionalidad=V&cedula='.$this->cedula);
 
             $texto = $crawler->text();
             $Condi = strlen($texto);
+
+            sleep(5);
             
             if ($Condi < 720) {
                 $nombre = $crawler->filter('td > b')->eq(2)->text();
@@ -74,7 +77,7 @@ class CreatePersona extends Component
                         break;
                 }
 
-                $this->load = 1;
+                
 
                 /* return $nombres; */
                 
@@ -111,7 +114,7 @@ class CreatePersona extends Component
                         $this->readonly = false;
                 }
 
-                $this->load = 1;
+                
             }
         } catch (\Throwable $th) {
             $this->nombre = null;
@@ -119,7 +122,7 @@ class CreatePersona extends Component
             $this->errorci = "No encontramos registros de esta C.I";
             $this->readonly = false;
 
-            $this->load = 1;
+            
         }
     }
 

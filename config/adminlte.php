@@ -358,13 +358,13 @@ return [
                 ],
             ],
         ],
-        [
+        /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
+        ], */
         ['header' => 'SEGURIDAD'],
         [
             'text'   => 'Bitacora',
@@ -386,7 +386,7 @@ return [
             'active' => ['users*'],
             'can'    => 'users.index',
         ],
-        [
+        /* [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
@@ -449,7 +449,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ], */
     ],
 
     /*

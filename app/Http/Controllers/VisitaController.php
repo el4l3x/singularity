@@ -19,6 +19,7 @@ class VisitaController extends Controller
 {
     public function __construct() {
         $this->middleware('can:visitas.index')->only('index');
+        $this->middleware('can:visitas.show')->only('show');
         $this->middleware('can:visitas.create')->only('create', 'store');
         $this->middleware('can:visitas.edit')->only('edit', 'update');
         $this->middleware('can:visitas.destroy')->only('destroy');
