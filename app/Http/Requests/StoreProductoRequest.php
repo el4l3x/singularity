@@ -32,6 +32,7 @@ class StoreProductoRequest extends FormRequest
             'nombre' => 'required|unique:productos,nombre',
             'precio' => [ 
                 'required',
+                'regex:/^\d*(?:.\d{1,2})?$/',
                 'numeric',
             ],
             'etiquetas' => 'array',

@@ -34,6 +34,7 @@ class StoreServicioRequest extends FormRequest
             'precio' => [
                 'required',
                 'numeric',
+                'regex:/^\d*(?:.\d{1,2})?$/',
             ],
             'etiquetas' => 'array',
         ];

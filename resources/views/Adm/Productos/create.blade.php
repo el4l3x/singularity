@@ -26,7 +26,7 @@
                                 </x-slot>
                             </x-adminlte-input>
                         
-                            <x-adminlte-input name="precio" label="Precio" placeholder="" enable-old-support maxlength="9" fgroup-class="col-lg-6 col-md-6 col-sm-12">
+                            <x-adminlte-input data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0', 'removeMaskOnSubmit': true" inputmode="decimal" name="precio" label="Precio" placeholder="" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12">
                                 <x-slot name="bottomSlot">
                                     @error('precio')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -84,6 +84,7 @@
 @stop
 
 @section('plugins.Select2', true)
+@section('plugins.InputMask', true)
 
 @section('css')
     <style>
@@ -96,6 +97,8 @@
 
 @section('js')    
     <script>        
-        
+        $(document).ready(function(){
+            $(":input").inputmask();
+        });
     </script>
 @stop
