@@ -39,9 +39,9 @@
                         </a>
                     
                         {{-- Menu items --}}
-                        @can('visitas.index')
-                            <ul class="nav nav-treeview">
-                                
+                        <ul class="nav nav-treeview">
+                            
+                            @can('visitas.index')
                                 <li class="nav-item">
 
                                     <a class="nav-link" href="{{ route('franquicias.visitas.index', $franquicias) }}">
@@ -55,9 +55,25 @@
                                     </a>
                                 
                                 </li>                        
+                            @endcan
+                            
+                            @can('entregas.index')
+                                <li class="nav-item">
 
-                            </ul>
-                        @endcan
+                                    <a class="nav-link" href="{{ route('franquicias.entregas.index', $franquicias) }}">
+                                
+                                        <i class="far fa-fw fa-circle"></i>
+                                
+                                        <p>
+                                            Notas de Entrega
+                                        </p>
+                                
+                                    </a>
+                                
+                                </li>                        
+                            @endcan
+
+                        </ul>
                     
                     </li>
                 @endforeach

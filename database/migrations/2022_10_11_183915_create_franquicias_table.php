@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('control_factura')->default('00000000');
             $table->string('control_presupuesto')->default('00000000');
             $table->string('control_entrega')->default('00000000');
+            $table->string('control_visita')->default('00000000');
             $table->string('factura')->default('00000000');
             $table->string('presupuesto')->default('00000000');
             $table->string('entrega')->default('00000000');

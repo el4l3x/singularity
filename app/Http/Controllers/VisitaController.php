@@ -74,7 +74,6 @@ class VisitaController extends Controller
             $visita = new Visita();
             $visita->entrada = $request->entrada;
             $visita->salida = $request->salida;
-            $visita->slug = Str::slug(date('d-m-Y').' '.$franquicia->nombre);
             $visita->descripcion = $request->descripcion;
             switch ($request->tipo) {
                 case 'p':
@@ -88,6 +87,12 @@ class VisitaController extends Controller
             $visita->visitable_id = $request->cliente;
             $visita->franquicia_id = $franquicia->id;
             $visita->save();
+
+            $visita->slug = Str::slug('V '.$franquicia->nombre.' '.str_pad($visita->id, 8, "0", STR_PAD_LEFT));
+            $visita->save();
+
+            $franquicia->visita += $franquicia->visita;
+            $franquicia->control_visita += $franquicia->control_visita;
 
             $visita->productos()->syncWithPivotValues($request->productos, [
                 'visita_id' => $visita->id,

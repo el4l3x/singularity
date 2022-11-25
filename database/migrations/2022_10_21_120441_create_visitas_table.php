@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->time('entrada');
             $table->time('salida')->nullable();
             $table->string('descripcion')->nullable();

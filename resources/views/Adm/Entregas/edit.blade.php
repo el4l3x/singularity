@@ -1,0 +1,112 @@
+@extends('adminlte::page')
+
+@section('title', 'N. de Entrega')
+
+@section('content_header')
+    <h1>Editar Nota de entrega {{ $entrega->slug }} a {{ $entrega->entregable->nombre }}</h1>
+@stop
+
+@section('content')
+    <div class="card">
+        
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-12">
+
+                    <form action="{{ route("entregas.update", $entrega) }}" method="post">
+                        @method('PUT')
+                        @csrf
+
+                        <div class="row">
+
+                            @php
+                                $config = [
+                                    "title" => "Selecciona la franquicia",
+                                    "liveSearch" => true,
+                                    "liveSearchPlaceholder" => "Buscar...",
+                                    "showTick" => true,
+                                    "actionsBox" => true,
+                                ];
+                            @endphp
+                            <x-adminlte-select-bs name="franquicia" id="franquicia" :config="$config" label="Franquicia" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12" data-style="btn-dark">
+                                @foreach ($franquicias as $franquicia)
+                                    @if ($entrega->franquicia_id == $franquicia->id)
+                                        <option value="{{ $franquicia->id }}" selected>{{ $franquicia->nombre }}</option>
+                                    @else
+                                    <option value="{{ $franquicia->id }}">{{ $franquicia->nombre }}</option>
+                                    @endif
+                                @endforeach
+                            </x-adminlte-select-bs>
+
+                            @php
+                                $config = ['format' => 'DD-MM-YYYY'];
+                            @endphp
+                            <x-adminlte-input-date name="fecha" :config="$config" enable-old-support label="Fecha" fgroup-class="col-lg-6 col-md-6 col-sm-12" value="{{ $entrega->updated_at }}">
+                                <x-slot name="bottomSlot">
+                                    @error('fecha')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </x-slot>
+
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar-day"></i>
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-input-date>
+
+                        </div>
+
+                        @livewire('exp.select-cliente', [
+                            'observaciones' => $entrega->observaciones,
+                            'cliente' => $entrega->entregable,
+                            'clienteT' => $entrega->entregable_type,
+                        ])
+
+                        @livewire('exp.cart-venta', [
+                            'entrega' => $entrega,
+                        ])
+                        
+                        <div class="form-group">
+                            <button class="btn btn-gray" type="submit">Guardar</button>
+                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.entregas.index", $entrega->franquicia) }}">Volver</a>
+                        </div>
+                    </form>
+
+                </div>    
+            </div>
+
+        </div>
+    </div>
+
+@stop
+
+@section('plugins.Select2', true)
+@section('plugins.TempusDominusBs4', true)
+@section('plugins.BootstrapSelect', true)
+
+@section('css')
+    <style>
+        .btn-gray {
+            background: #6c757d;
+            color: white;
+        }
+    </style>
+@stop
+
+@section('js')    
+    <script>        
+        
+    </script>
+@stop

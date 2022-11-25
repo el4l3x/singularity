@@ -14,6 +14,11 @@ class Producto extends Model
     {
         return $this->morphToMany(Visita::class, 'visitable');
     }
+    
+    public function entregas()
+    {
+        return $this->morphToMany(Entrega::class, 'entregable');
+    }
 
     public function tags()
     {

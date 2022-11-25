@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreEntregaRequest extends FormRequest
 {
@@ -13,7 +15,12 @@ class StoreEntregaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check() && Auth::user()->hasPermissionTo('entregas.create')) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -23,8 +30,34 @@ class StoreEntregaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'tipo' => [
+                'required',
+                Rule::in(['p', 'e']).
+                'alpha',
+            ],            
         ];
+
+        switch ($this->tipo) {
+            case 'p':
+                $rules = array_merge($rules, [
+                    'cliente' => 'integer|required|exists:personas,id',
+                ]);
+                break;
+
+            case 'e':
+                $rules = array_merge($rules, [
+                    'cliente' => 'integer|required|exists:empresas,id',
+                ]);
+                break;
+            
+            default:
+                $rules = array_merge($rules, [
+                    'cliente' => 'integer|required',
+                ]);
+                break;
+        }
+
+        return $rules;
     }
 }

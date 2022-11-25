@@ -77,27 +77,6 @@ class RoleSeeder extends Seeder
         ])->syncRoles([$roleAdm]);
         
         Permission::create([
-            'name' => 'visitas.index',
-            'description' => 'Ver Hojas de Visitas',
-        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
-        Permission::create([
-            'name' => 'visitas.show',
-            'description' => 'Ver detalles de Hoja de Visita',
-        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
-        Permission::create([
-            'name' => 'visitas.create',
-            'description' => 'Crear Hoja de Visita',
-        ])->syncRoles([$roleAdm, $roleSoc]);        
-        Permission::create([
-            'name' => 'visitas.edit',
-            'description' => 'Editar Hoja de Visita',
-        ])->syncRoles([$roleAdm, $roleSoc]);
-        Permission::create([
-            'name' => 'visitas.destroy',
-            'description' => 'Eliminar Hoja de Visita',
-        ])->syncRoles([$roleAdm, $roleSoc]);
-        
-        Permission::create([
             'name' => 'personas.index',
             'description' => 'Ver Clientes Personales',
         ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
@@ -180,6 +159,48 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'servicios.destroy',
             'description' => 'Eliminar Servicio',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+
+        Permission::create([
+            'name' => 'visitas.index',
+            'description' => 'Ver Hojas de Visitas',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
+        Permission::create([
+            'name' => 'visitas.show',
+            'description' => 'Ver detalles de Hoja de Visita',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
+        Permission::create([
+            'name' => 'visitas.create',
+            'description' => 'Crear Hoja de Visita',
+        ])->syncRoles([$roleAdm, $roleSoc]);        
+        Permission::create([
+            'name' => 'visitas.edit',
+            'description' => 'Editar Hoja de Visita',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        Permission::create([
+            'name' => 'visitas.destroy',
+            'description' => 'Eliminar Hoja de Visita',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        
+        Permission::create([
+            'name' => 'entregas.index',
+            'description' => 'Ver Notas de Entregas',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
+        Permission::create([
+            'name' => 'entregas.show',
+            'description' => 'Ver detalles de Nota de Entrega',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
+        Permission::create([
+            'name' => 'entregas.create',
+            'description' => 'Crear Nota de Entrega',
+        ])->syncRoles([$roleAdm, $roleSoc]);        
+        Permission::create([
+            'name' => 'entregas.edit',
+            'description' => 'Editar Nota de Entrega',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        Permission::create([
+            'name' => 'entregas.destroy',
+            'description' => 'Eliminar Nota de Entrega',
         ])->syncRoles([$roleAdm, $roleSoc]);
 
         Permission::create([

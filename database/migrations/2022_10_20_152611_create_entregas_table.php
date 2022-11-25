@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('entregas', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->nullable();
+            $table->decimal('total', 8, 2);
             $table->unsignedBigInteger('franquicia_id');
             $table->unsignedBigInteger('entregable_id');
             $table->string('entregable_type');
+            $table->string('observaciones')->nullable();
 
-            
+            $table->foreign('franquicia_id')->references('id')->on('franquicias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

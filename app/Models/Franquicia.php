@@ -19,6 +19,11 @@ class Franquicia extends Model
     {
         return $this->hasMany(Visita::class);
     }
+    
+    public function entregas()
+    {
+        return $this->hasMany(Entrega::class);
+    }
 
     public function getRouteKeyName()
     {
