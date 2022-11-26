@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Entrega;
-use App\Http\Requests\StoreEntregaRequest;
-use App\Http\Requests\UpdateEntregaRequest;
+use App\Models\Presupuesto;
+use App\Http\Requests\StorePresupuestoRequest;
+use App\Http\Requests\UpdatePresupuestoRequest;
 use App\Models\Empresa;
 use App\Models\Franquicia;
 use App\Models\Log;
 use App\Models\Persona;
-use App\Models\Producto;
-use App\Models\Servicio;
-use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\Auth;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class EntregaController extends Controller
+class PresupuestoController extends Controller
 {
     public function __construct() {
-        $this->middleware('can:entregas.index')->only('index');
-        $this->middleware('can:entregas.show')->only('show');
-        $this->middleware('can:entregas.create')->only('create', 'store');
-        $this->middleware('can:entregas.edit')->only('edit', 'update');
-        $this->middleware('can:entregas.destroy')->only('destroy');
+        $this->middleware('can:presupuestos.index')->only('index');
+        $this->middleware('can:presupuestos.show')->only('show');
+        $this->middleware('can:presupuestos.create')->only('create', 'store');
+        $this->middleware('can:presupuestos.edit')->only('edit', 'update');
+        $this->middleware('can:presupuestos.destroy')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -32,11 +30,11 @@ class EntregaController extends Controller
      */
     public function index(Franquicia $franquicia)
     {
-        $entregas = Entrega::where('franquicia_id', $franquicia->id)->get();
+        $presupuestos = Presupuesto::where('franquicia_id', $franquicia->id)->get();
 
-        return view('Adm.Entregas.index', [
+        return view('Adm.Presupuestos.index', [
             'franquicia' => $franquicia,
-            'entregas' => $entregas,
+            'presupuestos' => $presupuestos,
         ]);
     }
 
@@ -47,27 +45,18 @@ class EntregaController extends Controller
      */
     public function create(Franquicia $franquicia)
     {
-        $personas = Persona::get();
-        $empresas = Empresa::get();
-        $productos = Producto::get();
-        $servicios = Servicio::get();
-
-        return view('Adm.Entregas.create', [
+        return view('Adm.Presupuestos.create', [
             'franquicia' => $franquicia,
-            'personas' => $personas,
-            'empresas' => $empresas,
-            'productos' => $productos,
-            'servicios' => $servicios,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreEntregaRequest  $request
+     * @param  \App\Http\Requests\StorePresupuestoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Franquicia $franquicia, StoreEntregaRequest $request)
+    public function store(Franquicia $franquicia, StorePresupuestoRequest $request)
     {
         $idCartS = "s-".Auth::user()->id;
         $idCartP = "p-".Auth::user()->id;
@@ -79,32 +68,32 @@ class EntregaController extends Controller
                 $totalS = Cart::session($idCartS)->getTotal();
                 $total = $totalP+$totalS;
 
-                $entrega = new Entrega();
-                $entrega->franquicia_id = $franquicia->id;
-                $entrega->total = $total;
+                $presupuesto = new Presupuesto();
+                $presupuesto->franquicia_id = $franquicia->id;
+                $presupuesto->total = $total;
                 switch ($request->tipo) {
                     case 'p':
-                        $entrega->entregable_type = Persona::class;
+                        $presupuesto->presupuestoable_type = Persona::class;
                         break;
                     
                     case 'e':
-                        $entrega->entregable_type = Empresa::class;
+                        $presupuesto->presupuestoable_type = Empresa::class;
                         break;
                 }
-                $entrega->entregable_id = $request->cliente;
-                $entrega->observaciones = $request->observaciones;
-                $entrega->save();
+                $presupuesto->presupuestoable_id = $request->cliente;
+                $presupuesto->observaciones = $request->observaciones;
+                $presupuesto->save();
 
-                $franquicia->entrega += $franquicia->entrega;
-                $franquicia->control_entrega += $franquicia->control_entrega;
+                $franquicia->presupuesto += $franquicia->presupuesto;
+                $franquicia->control_presupuesto += $franquicia->control_presupuesto;
                 $franquicia->save();
 
-                $entrega->slug = Str::slug('NE '.$franquicia->nombre.' '.str_pad($franquicia->entrega, 8, "0", STR_PAD_LEFT));
-                $entrega->save();
+                $presupuesto->slug = Str::slug('PR '.$franquicia->nombre.' '.str_pad($franquicia->presupuesto, 8, "0", STR_PAD_LEFT));
+                $presupuesto->save();
                 
                 foreach (Cart::session($idCartP)->getContent() as $item) {                    
-                    $entrega->productos()->attach($item->id, [
-                        'entrega_id' => $entrega->id,
+                    $presupuesto->productos()->attach($item->id, [
+                        'presupuesto_id' => $presupuesto->id,
                         'cantidad' => $item->quantity,
                         'precio' => $item->price,
                         'descripcion' => $item->attributes->descripcion,
@@ -112,8 +101,8 @@ class EntregaController extends Controller
                 };
                 
                 foreach (Cart::session($idCartS)->getContent() as $item) {                    
-                    $entrega->servicios()->attach($item->id, [
-                        'entrega_id' => $entrega->id,
+                    $presupuesto->servicios()->attach($item->id, [
+                        'presupuesto_id' => $presupuesto->id,
                         'cantidad' => $item->quantity,
                         'precio' => $item->price,
                         'descripcion' => $item->attributes->descripcion,
@@ -122,7 +111,7 @@ class EntregaController extends Controller
                 
                 $log = new Log();
                 $log->user_id = Auth::user()->id;
-                $log->accion = "Crear nueva entrega '.$entrega->slug.' para cliente ".$entrega->entregable->nombre.' ('.$entrega->entregable->id.' - id '.$entrega->id.')';
+                $log->accion = "Crear nuevo presupuesto '.$presupuesto->slug.' para cliente ".$presupuesto->presupuestoable->nombre.' ('.$presupuesto->presupuestoable->id.' - id '.$presupuesto->id.')';
                 $log->save();
                 
                 DB::commit();
@@ -130,7 +119,7 @@ class EntregaController extends Controller
                 Cart::session($idCartP)->clear();
                 Cart::session($idCartS)->clear();
                 
-                return redirect()->route('franquicias.entregas.index', $franquicia);
+                return redirect()->route('franquicias.presupuestos.index', $franquicia);
             } catch (\Throwable $th) {
                 DB::rollBack();
                 return $th;
@@ -146,27 +135,27 @@ class EntregaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Entrega  $entrega
+     * @param  \App\Models\Presupuesto  $presupuesto
      * @return \Illuminate\Http\Response
      */
-    public function show(Entrega $entrega)
+    public function show(Presupuesto $presupuesto)
     {
-        return view('Adm.Entregas.show', [
-            'entrega' => $entrega,
+        return view('Adm.Presupuestos.show', [
+            'presupuesto' => $presupuesto,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Entrega  $entrega
+     * @param  \App\Models\Presupuesto  $presupuesto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entrega $entrega)
+    public function edit(Presupuesto $presupuesto)
     {
         $franquicias = Franquicia::get();
-        return view('Adm.Entregas.edit', [
-            'entrega' => $entrega,
+        return view('Adm.Presupuestos.edit', [
+            'presupuesto' => $presupuesto,
             'franquicias' => $franquicias,
         ]);
     }
@@ -174,11 +163,11 @@ class EntregaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateEntregaRequest  $request
-     * @param  \App\Models\Entrega  $entrega
+     * @param  \App\Http\Requests\UpdatePresupuestoRequest  $request
+     * @param  \App\Models\Presupuesto  $presupuesto
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEntregaRequest $request, Entrega $entrega)
+    public function update(UpdatePresupuestoRequest $request, Presupuesto $presupuesto)
     {
         $idCartS = "s-".Auth::user()->id;
         $idCartP = "p-".Auth::user()->id;
@@ -189,44 +178,44 @@ class EntregaController extends Controller
                 $totalP = Cart::session($idCartP)->getTotal();
                 $totalS = Cart::session($idCartS)->getTotal();
                 $total = $totalP+$totalS;
-                if ($entrega->franquicia_id != $request->franquicia) {
+                if ($presupuesto->franquicia_id != $request->franquicia) {
                     $breadFranquicia = true;
                 } else {
                     $breadFranquicia = false;
                 }
 
-                $entrega->franquicia_id = $request->franquicia;
-                $entrega->total = $total;
+                $presupuesto->franquicia_id = $request->franquicia;
+                $presupuesto->total = $total;
                 switch ($request->tipo) {
                     case 'p':
-                        $entrega->entregable_type = Persona::class;
+                        $presupuesto->presupuestoable_type = Persona::class;
                         break;
                     
                     case 'e':
-                        $entrega->entregable_type = Empresa::class;
+                        $presupuesto->presupuestoable_type = Empresa::class;
                         break;
                 }
-                $entrega->entregable_id = $request->cliente;
-                $entrega->observaciones = $request->observaciones;
-                $entrega->save();
+                $presupuesto->presupuestoable_id = $request->cliente;
+                $presupuesto->observaciones = $request->observaciones;
+                $presupuesto->save();
 
                 $franquicia = Franquicia::find($request->franquicia);
                 
                 if ($breadFranquicia) {
-                    $franquicia->entrega += $franquicia->entrega;
-                    $franquicia->control_entrega += $franquicia->control_entrega;
+                    $franquicia->presupuesto += $franquicia->presupuesto;
+                    $franquicia->control_presupuesto += $franquicia->control_presupuesto;
                     $franquicia->save();
                 }
 
-                $entrega->slug = Str::slug('NE '.$franquicia->nombre.' '.str_pad($franquicia->entrega, 8, "0", STR_PAD_LEFT));
-                $entrega->save();
+                $presupuesto->slug = Str::slug('P '.$franquicia->nombre.' '.str_pad($franquicia->presupuesto, 8, "0", STR_PAD_LEFT));
+                $presupuesto->save();
 
-                $entrega->productos()->detach();
-                $entrega->servicios()->detach();
+                $presupuesto->productos()->detach();
+                $presupuesto->servicios()->detach();
                 
                 foreach (Cart::session($idCartP)->getContent() as $item) {                    
-                    $entrega->productos()->attach($item->id, [
-                        'entrega_id' => $entrega->id,
+                    $presupuesto->productos()->attach($item->id, [
+                        'presupuesto_id' => $presupuesto->id,
                         'cantidad' => $item->quantity,
                         'precio' => $item->price,
                         'descripcion' => $item->attributes->descripcion,
@@ -234,8 +223,8 @@ class EntregaController extends Controller
                 };
                 
                 foreach (Cart::session($idCartS)->getContent() as $item) {                    
-                    $entrega->servicios()->attach($item->id, [
-                        'entrega_id' => $entrega->id,
+                    $presupuesto->servicios()->attach($item->id, [
+                        'presupuesto_id' => $presupuesto->id,
                         'cantidad' => $item->quantity,
                         'precio' => $item->price,
                         'descripcion' => $item->attributes->descripcion,
@@ -244,7 +233,7 @@ class EntregaController extends Controller
                 
                 $log = new Log();
                 $log->user_id = Auth::user()->id;
-                $log->accion = "Editar nota de entrega '.$entrega->slug.' para cliente ".$entrega->entregable->nombre.' ('.$entrega->entregable->id.' - id '.$entrega->id.')';
+                $log->accion = "Editar Presupuesto '.$presupuesto->slug.' para cliente ".$presupuesto->presupuestoable->nombre.' ('.$presupuesto->presupuestoable->id.' - id '.$presupuesto->id.')';
                 $log->save();
                 
                 DB::commit();
@@ -252,7 +241,7 @@ class EntregaController extends Controller
                 Cart::session($idCartP)->clear();
                 Cart::session($idCartS)->clear();
                 
-                return redirect()->route('franquicias.entregas.index', $franquicia);
+                return redirect()->route('franquicias.presupuestos.index', $franquicia);
             } catch (\Throwable $th) {
                 DB::rollBack();
                 return $th;
@@ -268,24 +257,24 @@ class EntregaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Entrega  $entrega
+     * @param  \App\Models\Presupuesto  $presupuesto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entrega $entrega)
+    public function destroy(Presupuesto $presupuesto)
     {
         try {
             DB::beginTransaction();
 
-            $entrega->delete();
+            $presupuesto->delete();
 
             $log = new Log();
-            $log->accion = "Eliminar entrega '.$entrega->slug.' para cliente ".$entrega->entregable->nombre.' ('.$entrega->entregable->id.' - id '.$entrega->id.')';
+            $log->accion = "Eliminar presupuesto '.$presupuesto->slug.' para cliente ".$presupuesto->presupuestoable->nombre.' ('.$presupuesto->presupuestoable->id.' - id '.$presupuesto->id.')';
             $log->user_id = Auth::user()->id;
             $log->save();
 
             DB::commit();
 
-            return redirect()->route('franquicias.entregas.index', $entrega->franquicia);
+            return redirect()->route('franquicias.presupuestos.index', $presupuesto->franquicia);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;

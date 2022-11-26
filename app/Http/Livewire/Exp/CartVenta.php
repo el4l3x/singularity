@@ -19,7 +19,7 @@ class CartVenta extends Component
     public $totalP = 0;
     public $totalS = 0;
     public $total = 0;
-    public $entrega;
+    public $data = false;
 
     public function addProducto()
     {
@@ -218,41 +218,45 @@ class CartVenta extends Component
     public function mount()
     {
         
-        $idCart = "p-".Auth::user()->id;
-        Cart::session($idCart)->clear();
+        $idCartP = "p-".Auth::user()->id;
+        Cart::session($idCartP)->clear();
 
-        foreach ($this->entrega->productos as $item) {
-            Cart::session($idCart)->add(array(
-                'id' => $item->id,
-                'name' => $item->nombre,
-                'price' => $item->pivot->precio,
-                'quantity' => $item->pivot->cantidad,
-                'attributes' => array(
-                    'descripcion' => $item->pivot->descripcion,
-                ),
-                'associatedModel' => Producto::class,
-            ));    
+        $idCartS = "s-".Auth::user()->id;
+        Cart::session($idCartS)->clear();
+
+        if ($this->data != false) {
+
+            foreach ($this->data->productos as $item) {
+                Cart::session($idCartP)->add(array(
+                    'id' => $item->id,
+                    'name' => $item->nombre,
+                    'price' => $item->pivot->precio,
+                    'quantity' => $item->pivot->cantidad,
+                    'attributes' => array(
+                        'descripcion' => $item->pivot->descripcion,
+                    ),
+                    'associatedModel' => Producto::class,
+                ));    
+            }            
+
+            foreach ($this->data->servicios as $item) {
+                Cart::session($idCartS)->add(array(
+                    'id' => $item->id,
+                    'name' => $item->nombre,
+                    'price' => $item->pivot->precio,
+                    'quantity' => $item->pivot->cantidad,
+                    'attributes' => array(
+                        'descripcion' => $item->pivot->descripcion,
+                    ),
+                    'associatedModel' => Servicio::class,
+                ));    
+            }
+
         }
-
-        $idCart = "s-".Auth::user()->id;
-        Cart::session($idCart)->clear();
-
-        foreach ($this->entrega->servicios as $item) {
-            Cart::session($idCart)->add(array(
-                'id' => $item->id,
-                'name' => $item->nombre,
-                'price' => $item->pivot->precio,
-                'quantity' => $item->pivot->cantidad,
-                'attributes' => array(
-                    'descripcion' => $item->pivot->descripcion,
-                ),
-                'associatedModel' => Servicio::class,
-            ));    
-        }
-
-        $this->totalP = Cart::session($idCart)->getTotal();
-        $this->totalS = Cart::session($idCart)->getTotal();
-
+        
+        $this->totalP = Cart::session($idCartP)->getTotal();
+        $this->totalS = Cart::session($idCartS)->getTotal();
+        
         $this->productos = Producto::get();
         $this->servicios = Servicio::get();
     }

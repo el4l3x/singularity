@@ -202,6 +202,27 @@ class RoleSeeder extends Seeder
             'name' => 'entregas.destroy',
             'description' => 'Eliminar Nota de Entrega',
         ])->syncRoles([$roleAdm, $roleSoc]);
+        
+        Permission::create([
+            'name' => 'presupuestos.index',
+            'description' => 'Ver Presupuestos',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
+        Permission::create([
+            'name' => 'presupuestos.show',
+            'description' => 'Ver detalles de Presupuesto',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
+        Permission::create([
+            'name' => 'presupuestos.create',
+            'description' => 'Crear Presupuesto',
+        ])->syncRoles([$roleAdm, $roleSoc]);        
+        Permission::create([
+            'name' => 'presupuestos.edit',
+            'description' => 'Editar Presupuesto',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        Permission::create([
+            'name' => 'presupuestos.destroy',
+            'description' => 'Eliminar Presupuesto',
+        ])->syncRoles([$roleAdm, $roleSoc]);
 
         Permission::create([
             'name' => 'cobros.index',

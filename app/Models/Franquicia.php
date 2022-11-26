@@ -25,6 +25,11 @@ class Franquicia extends Model
         return $this->hasMany(Entrega::class);
     }
 
+    public function presupuestos()
+    {
+        return $this->hasMany(Presupuesto::class);
+    }
+
     public function getRouteKeyName()
     {
         return "slug";

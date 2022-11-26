@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'N. de Entrega')
+@section('title', 'Presupuestos')
 
 @section('content_header')
-    <h1>Editar Nota de entrega {{ $entrega->slug }} a {{ $entrega->entregable->nombre }}</h1>
+    <h1>Editar Presupuesto {{ $presupuesto->slug }} a {{ $presupuesto->presupuestoable->nombre }}</h1>
 @stop
 
 @section('content')
@@ -24,7 +24,7 @@
             <div class="row mb-3">
                 <div class="col-md-12">
 
-                    <form action="{{ route("entregas.update", $entrega) }}" method="post">
+                    <form action="{{ route("presupuestos.update", $presupuesto) }}" method="post">
                         @method('PUT')
                         @csrf
 
@@ -41,7 +41,7 @@
                             @endphp
                             <x-adminlte-select-bs name="franquicia" id="franquicia" :config="$config" label="Franquicia" enable-old-support fgroup-class="col-lg-6 col-md-6 col-sm-12" data-style="btn-dark">
                                 @foreach ($franquicias as $franquicia)
-                                    @if ($entrega->franquicia_id == $franquicia->id)
+                                    @if ($presupuesto->franquicia_id == $franquicia->id)
                                         <option value="{{ $franquicia->id }}" selected>{{ $franquicia->nombre }}</option>
                                     @else
                                     <option value="{{ $franquicia->id }}">{{ $franquicia->nombre }}</option>
@@ -52,7 +52,7 @@
                             @php
                                 $config = ['format' => 'DD-MM-YYYY'];
                             @endphp
-                            <x-adminlte-input-date name="fecha" :config="$config" enable-old-support label="Fecha" fgroup-class="col-lg-6 col-md-6 col-sm-12" value="{{ $entrega->updated_at }}">
+                            <x-adminlte-input-date name="fecha" :config="$config" enable-old-support label="Fecha" fgroup-class="col-lg-6 col-md-6 col-sm-12" value="{{ $presupuesto->updated_at }}">
                                 <x-slot name="bottomSlot">
                                     @error('fecha')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -69,18 +69,18 @@
                         </div>
 
                         @livewire('exp.select-cliente', [
-                            'observaciones' => $entrega->observaciones,
-                            'cliente' => $entrega->entregable,
-                            'clienteT' => $entrega->entregable_type,
+                            'observaciones' => $presupuesto->observaciones,
+                            'cliente' => $presupuesto->presupuestoable,
+                            'clienteT' => $presupuesto->presupuestoable_type,
                         ])
 
                         @livewire('exp.cart-venta', [
-                            'data' => $entrega,
+                            'data' => $presupuesto,
                         ])
                         
                         <div class="form-group">
                             <button class="btn btn-gray" type="submit">Guardar</button>
-                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.entregas.index", $entrega->franquicia) }}">Volver</a>
+                            <a class="btn btn-gray" role="button" href="{{ route("franquicias.presupuestos.index", $presupuesto->franquicia) }}">Volver</a>
                         </div>
                     </form>
 

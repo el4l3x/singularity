@@ -27,6 +27,18 @@
         @endif
     })
 
+    /* document.addEventListener('livewire:load', function () {
+        $('#{{ $id }}').selectpicker( @json($config) );
+
+        // Add support to auto select old submitted values in case of
+        // validation errors.
+
+        @if($errors->any() && $enableOldSupport)
+            let oldOptions = @json(collect($getOldValue($errorKey)));
+            $('#{{ $id }}').selectpicker('val', oldOptions);
+        @endif
+    }) */
+
 </script>
 @endpush
 

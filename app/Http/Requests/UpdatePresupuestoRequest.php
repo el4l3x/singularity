@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class StoreEntregaRequest extends FormRequest
+class UpdatePresupuestoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class StoreEntregaRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check() && Auth::user()->hasPermissionTo('entregas.create')) {
+        if (Auth::check() && Auth::user()->hasPermissionTo('presupuestos.edit')) {
             return true;
         } else {
             return false;
@@ -35,7 +35,16 @@ class StoreEntregaRequest extends FormRequest
                 'required',
                 Rule::in(['p', 'e']),
                 'alpha',
-            ],            
+            ],
+            'franquicia' => [
+                'required',
+                'integer',
+                'exists:franquicias,id',
+            ],
+            'fecha' => [
+                'required',
+                'date',
+            ],
         ];
 
         switch ($this->tipo) {

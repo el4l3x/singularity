@@ -15,6 +15,16 @@ class Persona extends Model
         return $this->morphMany(Visita::class, 'visitable');
     }
 
+    public function entregas()
+    {
+        return $this->morphMany(Entrega::class, 'entregable');
+    }
+
+    public function presupuestos()
+    {
+        return $this->morphMany(Presupuesto::class, 'presupuestoable');
+    }
+
     public function direccion()
     {
         return $this->morphOne(Direccione::class, 'direccioneable');

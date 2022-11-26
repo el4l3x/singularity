@@ -1,4 +1,5 @@
 <div class="row">
+
     @php
     $configu = [
         "placeholder" => "",
@@ -24,7 +25,7 @@
         </x-slot>
 
         @foreach ($datas as $data)
-            @if ($cliente->id == $data->id)
+            @if (isset($cliente->id) && $cliente->id == $data->id)
                 <option value="{{ $data->id }}" selected>{{ $data->nombre }}</option>
             @else
                 <option value="{{ $data->id }}">{{ $data->nombre }}</option>
@@ -42,3 +43,12 @@
         </x-slot>
     </x-adminlte-textarea>
 </div>
+
+@push('js')
+    <script>
+        window.addEventListener('contentChanged', event => {
+            $('#cliente').select2('destroy');
+            $('#cliente').select2();
+        });
+    </script>
+@endpush

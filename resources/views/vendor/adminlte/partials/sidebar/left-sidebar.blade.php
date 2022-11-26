@@ -72,6 +72,22 @@
                                 
                                 </li>                        
                             @endcan
+                            
+                            @can('presupuestos.index')
+                                <li class="nav-item">
+
+                                    <a class="nav-link" href="{{ route('franquicias.presupuestos.index', $franquicias) }}">
+                                
+                                        <i class="far fa-fw fa-circle"></i>
+                                
+                                        <p>
+                                            Presupuestos
+                                        </p>
+                                
+                                    </a>
+                                
+                                </li>                        
+                            @endcan
 
                         </ul>
                     

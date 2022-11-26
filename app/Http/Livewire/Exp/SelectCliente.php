@@ -12,9 +12,9 @@ class SelectCliente extends Component
     public $personas;
     public $empresas;
     public $tipo;
-    public $observaciones;
-    public $cliente;
-    public $clienteT;
+    public $observaciones = null;
+    public $cliente = null;
+    public $clienteT = 'App\Models\Persona';
     public $selectC;
 
     public function buscar()
@@ -28,6 +28,8 @@ class SelectCliente extends Component
                 $this->datas = $this->personas;
                 break;
         }
+
+        $this->dispatchBrowserEvent('contentChanged');
     }
 
     public function mount()

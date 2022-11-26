@@ -20,6 +20,11 @@ class Producto extends Model
         return $this->morphToMany(Entrega::class, 'entregable');
     }
 
+    public function presupuestos()
+    {
+        return $this->morphToMany(Presupuesto::class, 'presupuestoable');
+    }
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
