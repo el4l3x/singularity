@@ -24,6 +24,11 @@ class Empresa extends Model
     {
         return $this->morphMany(Presupuesto::class, 'presupuestoable');
     }
+    
+    public function facturas()
+    {
+        return $this->morphMany(Factura::class, 'facturable');
+    }
 
     public function direccion()
     {

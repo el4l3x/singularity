@@ -88,6 +88,22 @@
                                 
                                 </li>                        
                             @endcan
+                            
+                            @can('facturas.index')
+                                <li class="nav-item">
+
+                                    <a class="nav-link" href="{{ route('franquicias.facturas.index', $franquicias) }}">
+                                
+                                        <i class="far fa-fw fa-circle"></i>
+                                
+                                        <p>
+                                            Facturas
+                                        </p>
+                                
+                                    </a>
+                                
+                                </li>                        
+                            @endcan
 
                         </ul>
                     

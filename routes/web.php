@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntregaController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\FranquiciaController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\PersonaController;
@@ -54,4 +55,5 @@ Route::middleware([
     Route::resource('franquicias.visitas', VisitaController::class)->shallow();
     Route::resource('franquicias.entregas', EntregaController::class)->shallow();
     Route::resource('franquicias.presupuestos', PresupuestoController::class)->shallow();
+    Route::resource('franquicias.facturas', FacturaController::class)->shallow();
 });

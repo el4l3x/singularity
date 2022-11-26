@@ -223,6 +223,27 @@ class RoleSeeder extends Seeder
             'name' => 'presupuestos.destroy',
             'description' => 'Eliminar Presupuesto',
         ])->syncRoles([$roleAdm, $roleSoc]);
+        
+        Permission::create([
+            'name' => 'facturas.index',
+            'description' => 'Ver Facturas',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);
+        Permission::create([
+            'name' => 'facturas.show',
+            'description' => 'Ver detalles de Factura',
+        ])->syncRoles([$roleAdm, $roleObs, $roleSoc]);        
+        Permission::create([
+            'name' => 'facturas.create',
+            'description' => 'Crear Factura',
+        ])->syncRoles([$roleAdm, $roleSoc]);        
+        Permission::create([
+            'name' => 'facturas.edit',
+            'description' => 'Editar Factura',
+        ])->syncRoles([$roleAdm, $roleSoc]);
+        Permission::create([
+            'name' => 'facturas.destroy',
+            'description' => 'Eliminar Factura',
+        ])->syncRoles([$roleAdm, $roleSoc]);
 
         Permission::create([
             'name' => 'cobros.index',

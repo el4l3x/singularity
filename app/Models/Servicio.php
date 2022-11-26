@@ -24,6 +24,11 @@ class Servicio extends Model
     {
         return $this->morphToMany(Presupuesto::class, 'presupuestoable');
     }
+    
+    public function facturas()
+    {
+        return $this->morphToMany(Factura::class, 'facturable');
+    }
 
     public function tags()
     {
